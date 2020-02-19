@@ -84,6 +84,3 @@ class ProductImage(CoreModel):
 
     class Meta:
         ordering = ['pk',]
-
-    # def __str__(self):
-    #     return 'Product {}'.format(self.title)
