@@ -31,15 +31,15 @@ class Category(CoreModel):
         return self.title
 
 
-class ProductQuerySet(models.QuerySet):
+class ProductAdQuerySet(models.QuerySet):
     pass
 
 
-class ProductManager(CoreModelManager):
+class ProductAdManager(CoreModelManager):
     pass
 
 
-class Product(CoreModel):
+class ProductAd(CoreModel):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True)
     price = models.CharField(max_length=100, null=True, blank=True)
@@ -48,22 +48,31 @@ class Product(CoreModel):
 
     active = models.BooleanField(default=True)  
 
-    objects = ProductManager()
+    objects = ProductAdManager()
 
     class Meta:
         ordering = ['pk',]
 
     def __str__(self):
-        return 'Product {}'.format(self.title)
+        return 'ProductAd {}'.format(self.title)
 
 
-class ProductImageQuerySet(models.QuerySet):
+class Product(CoreModel):
+    product_ad = models.ForeignKey(ProductAd, on_delete=models.CASCADE, related_name='products')
+    name = models.CharField(max_length=20)
+    price = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'{self.name} - {self.price}'
+
+
+class ProductAdImageQuerySet(models.QuerySet):
     pass
 
 
-class ProductImageManager(CoreModelManager):
+class ProductAdImageManager(CoreModelManager):
     def get_queryset(self):
-        return ProductImageQuerySet(self.model, using=self._db)
+        return ProductAdImageQuerySet(self.model, using=self._db)
 
     def create_product_image(self, image_file):
         catalog_image = create_resized_image_from_file(image_file, 480)
@@ -75,12 +84,12 @@ class ProductImageManager(CoreModelManager):
     #     return super(ProductImageManager, self).create(*args, **kwargs)
 
 
-class ProductImage(CoreModel):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+class ProductAdImage(CoreModel):
+    product = models.ForeignKey(ProductAd, on_delete=models.CASCADE, related_name='images')
     original = models.FileField()
     catalog_image = models.FileField(null=True, blank=True)
 
-    objects = ProductImageManager()
+    objects = ProductAdImageManager()
 
     class Meta:
         ordering = ['pk',]

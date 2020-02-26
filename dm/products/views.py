@@ -3,8 +3,8 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from products.serializers import ProductSerializer, CategorySerializer
-from products.models import Product, Category
+from products.serializers import ProductAdSerializer, CategorySerializer
+from products.models import ProductAd, Category
 # from piglets.filters import PigletsFilter
 
 
@@ -13,9 +13,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+class ProductAdViewSet(viewsets.ModelViewSet):
+    queryset = ProductAd.objects.all()
+    serializer_class = ProductAdSerializer
     # filter_class = PigletsFilter
 
 #     @action(methods=['post'], detail=False)

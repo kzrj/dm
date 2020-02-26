@@ -9,10 +9,10 @@ from django.conf import settings
 
 from rest_framework import routers
 
-from products.views import ProductViewSet, CategoryViewSet
+from products.views import ProductAdViewSet, CategoryViewSet
 
 router = routers.DefaultRouter()
-router.register(r'products', ProductViewSet, basename='products')
+router.register(r'product_ads', ProductAdViewSet, basename='product_ads')
 router.register(r'categories', CategoryViewSet, basename='categories')
 
 urlpatterns = [
