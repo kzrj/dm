@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 
-from products.models import ProductAd, ProductAdImage, Category
+from products.models import ProductAd, ProductAdImage, Category, Product
 
 
 class ProductAdImageSerializer(serializers.ModelSerializer):
@@ -15,8 +15,15 @@ class ProductAdImageSerializer(serializers.ModelSerializer):
         fields = ['original', 'catalog_image']
 
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['name', 'price']
+
+
 class ProductAdSerializer(serializers.ModelSerializer):
     images = ProductAdImageSerializer(many=True)
+    products = ProductSerializer(many=True)
 
     class Meta:
         model = ProductAd

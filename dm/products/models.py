@@ -54,12 +54,12 @@ class ProductAd(CoreModel):
         ordering = ['pk',]
 
     def __str__(self):
-        return 'ProductAd {}'.format(self.title)
+        return self.title
 
 
 class Product(CoreModel):
     product_ad = models.ForeignKey(ProductAd, on_delete=models.CASCADE, related_name='products')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
     price = models.CharField(max_length=20)
 
     def __str__(self):
