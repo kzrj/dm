@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.core.exceptions import ValidationError as DjangoValidationError
 
 from core.models import CoreModel, CoreModelManager
+from products.models import Shop
 
 
 class ProfileQuerySet(models.QuerySet):
@@ -16,11 +17,12 @@ class ProfileManager(CoreModelManager):
 
 
 class Profile(CoreModel):
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,
+     related_name="profile")
     nickname = models.CharField(max_length=20)
     description = models.TextField(null=True, blank=True)
-    delivery = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=11, null=True, blank=True)
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, blank=True)
 
     viber_id = models.CharField(max_length=100, null=True, blank=True)
     viber_name = models.CharField(max_length=100, null=True, blank=True)

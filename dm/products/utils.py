@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import tempfile
 
 from django.conf import settings
 
@@ -37,9 +38,4 @@ def create_resized_image_from_file(file, resolution):
     tmpfile.seek(0)
 
     return tmpfile
-
-# def user_original_directory_path(instance, filename):
-#     return 'products/originals/user_{0}/{1}'.format(instance.owner.id, filename)
-
-# def user_preview_directory_path(instance, filename):
-#     return 'products/previews/user_{0}/{1}'.format(instance.owner.id, filename)
+    

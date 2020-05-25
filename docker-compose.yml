@@ -28,10 +28,10 @@ services:
     build: .
     depends_on:
       - db
-    # command: bash -c "cd svinbin &&
+    # command: bash -c "cd dm &&
     #                   python manage.py migrate &&
     #                   python manage.py makemigrations --no-input &&
-    #                   python manage.py test workshopthree.tests.test_utils"
+    #                   python manage.py test products.tests.test_models.ImageCreationTest"
                       # python manage.py test workshopfour.tests.test_views"
                       # python manage.py test transactions.tests.test_models"
                       # python manage.py test sows.tests.test_managers"

@@ -9,14 +9,15 @@ from django.conf import settings
 
 from rest_framework import routers
 
-from products.views import ProductAdViewSet, CategoryViewSet
-
+from products.views import ProductViewSet, CategoryViewSet, ShopViewSet, InitTestDataView
 router = routers.DefaultRouter()
-router.register(r'product_ads', ProductAdViewSet, basename='product_ads')
+router.register(r'products', ProductViewSet, basename='products')
 router.register(r'categories', CategoryViewSet, basename='categories')
+router.register(r'shops', ShopViewSet, basename='shops')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
+    url(r'^api/init_data/$', InitTestDataView.as_view()) ,    
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
 + static('/media/', document_root=os.path.join(settings.BASE_DIR, '../media'))
