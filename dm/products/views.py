@@ -39,7 +39,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
     queryset = Shop.objects.all() \
-        # .add_products_count_by_dm_cat()
+        .add_products_count_by_dm_cat()
     serializer_class = ShopSerializer
     filter_class = ShopFilter
 
