@@ -2,7 +2,7 @@
 import tempfile
 
 from django.db import models
-from django.db.models import Q, Subquery, OuterRef, Count
+from django.db.models import Q, Subquery, OuterRef, Count, Prefetch, F
 from django.db.models.functions import Coalesce
 from django.core.exceptions import ValidationError as DjangoValidationError
 
@@ -13,14 +13,15 @@ from products.utils import create_resized_image_from_file
 class Category(CoreModel):
     CAT_TYPES =  [('dm', 'dm'), ('ds', 'ds')]
     name = models.CharField(max_length=100)
+    ru_name = models.CharField(max_length=100, null=True)
     description = models.TextField(null=True)
     category_type = models.CharField(max_length=20, choices=CAT_TYPES)
 
     class Meta:
-        ordering = ['pk',]
+        ordering = ['name',]
 
     def __str__(self):
-        return self.name
+        return self.ru_name
 
 
 class ShopQuerySet(models.QuerySet):
@@ -40,6 +41,16 @@ class ShopQuerySet(models.QuerySet):
     def filter_by_cat(self, cat_name):
         return self.filter(**{f"{cat_name}_count__gt": 0}).order_by(f'-{cat_name}_count')
 
+    def add_category_products(self, category_name):
+        return self.prefetch_related(
+                        Prefetch(
+                            'products',
+                            queryset=Product.objects.filter(category__name=category_name) \
+                                                    .prefetch_related('images'),
+                            to_attr='category_products'
+                        )
+                    ) \
+
 
 class Shop(CoreModel):
     name = models.CharField(max_length=100, unique=True)
@@ -51,21 +62,44 @@ class Shop(CoreModel):
     def __str__(self):
         return self.name
 
+    @property
+    def category_images(self):
+        images = []
+        if not hasattr(self, 'category_products'):
+            return images
+        
+        for product in self.category_products:
+            if product.images.all().first():
+                images.append(product.images.all().first().thumb_image.url)
+
+        return images[:2]
+
+    @property
+    def categories(self):
+        return list(set(self.products.all().select_related('category') \
+                .values_list('category__name', 'category__ru_name')))
+
 
 class ProductQuerySet(models.QuerySet):
     pass
+
+
+class ProductManager(CoreModelManager):
+    def get_queryset(self):
+        return ProductQuerySet(self.model, using=self._db) \
+            .select_related('category').prefetch_related('images')
 
 
 class Product(CoreModel):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     price = models.CharField(max_length=100, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='products')
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='products')
 
     active = models.BooleanField(default=True)  
 
-    objects = ProductQuerySet.as_manager()
+    objects = ProductManager()
 
     class Meta:
         ordering = ['pk',]
@@ -101,7 +135,9 @@ class ProductImageManager(CoreModelManager):
 
 class ProductImage(CoreModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images',
-    	 null=True, blank=True)
+         null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='images',
+         null=True, blank=True)
     original = models.FileField(null=True, blank=True)
     catalog_image = models.FileField(null=True, blank=True)
     thumb_image = models.FileField(null=True, blank=True)

@@ -1,15 +1,20 @@
 # # -*- coding: utf-8 -*-
 import random
 
+from django.contrib.auth.models import User
+
 from products.models import Shop, Category, Product, ProductImage
 
 
 def create_test_dm_categories():
-    titles = ['polufabrikati', 'konservaciya', 'vipechka', 'torti', 'myaso', 'ovoshi', 'napitki']
+    titles = [('polufabrikati', 'полуфабрикаты'), ('konservaciya', 'консервация'),
+     ('vipechka', 'выпечка'), ('torti', 'торты'), ('myaso', 'мясо'), ('ovoshi', 'овощи'),
+     ('napitki', 'напитки')]
     cats = list()
 
     for title in titles:
-        cats.append(Category(name=title, description=f'description of {title}', category_type='dm'))
+        cats.append(Category(name=title[0], ru_name=title[1], description=f'description of {title}',
+         category_type='dm'))
 
     Category.objects.bulk_create(cats)
 
@@ -26,7 +31,7 @@ def create_test_dm_shops():
     Shop.objects.bulk_create(shops)
 
 
-def gen_test_dm_products(shop_name, cats_list):
+def gen_test_dm_products(shop_name, cats_list, images=True):
     shop = Shop.objects.get(name=shop_name)
 
     products = list()
@@ -36,35 +41,42 @@ def gen_test_dm_products(shop_name, cats_list):
                  price=str(random.randint(10, 500))))
     Product.objects.bulk_create(products)
 
-    for product in Product.objects.filter(price__gt=250, shop__name=shop_name):
-        with open(f'../data/{product.category.name}.jpg', 'rb') as file:
-            ProductImage.objects.create_product_image(product=product, image_file=file)
+    if images:
+        for product in Product.objects.filter(price__gt=250, shop__name=shop_name):
+            with open(f'../data/{product.category.name}.jpg', 'rb') as file:
+                ProductImage.objects.create_product_image(product=product, image_file=file)
 
 
-def create_test_dm_products():
+def create_test_dm_products(images_onOff=True):
+    User.objects.create_superuser(username='kaizerj',email='kzrster@gmail.com', password='jikozfree')
+
     create_test_dm_categories()
     create_test_dm_shops()
 
     cats = Category.objects.filter(category_type='dm').values_list('name', flat=True)
 
     gen_test_dm_products(shop_name='Вкусняшки от Елены',
-        cats_list=['polufabrikati', 'konservaciya', 'vipechka',])
+        cats_list=['polufabrikati', 'konservaciya', 'vipechka',], images=images_onOff)
 
-    gen_test_dm_products(shop_name='Консервы от Дугара', cats_list=['konservaciya', ])
+    gen_test_dm_products(shop_name='Консервы от Дугара', cats_list=['konservaciya'], images=images_onOff)
 
     gen_test_dm_products(shop_name='Стелла',
-        cats_list=['polufabrikati', 'konservaciya', 'vipechka', 'torti', 'myaso', 'ovoshi', 'napitki'])
+        cats_list=['polufabrikati', 'konservaciya', 'vipechka', 'torti', 'myaso', 'ovoshi', 'napitki'],
+        images=images_onOff)
 
-    gen_test_dm_products(shop_name='АМТА', cats_list=['torti', 'vipechka'])
+    gen_test_dm_products(shop_name='АМТА', cats_list=['torti', 'vipechka'], images=images_onOff)
 
-    gen_test_dm_products(shop_name='ИГОРЬ', cats_list=['polufabrikati', 'myaso', 'ovoshi', 'napitki'])
+    gen_test_dm_products(shop_name='ИГОРЬ', cats_list=['polufabrikati', 'myaso', 'ovoshi', 'napitki'],
+        images=images_onOff)
 
-    gen_test_dm_products(shop_name='Овощи от дяди Славы', cats_list=['ovoshi'])
+    gen_test_dm_products(shop_name='Овощи от дяди Славы', cats_list=['ovoshi'], images=images_onOff)
 
-    gen_test_dm_products(shop_name='Овощи от дяди Пети', cats_list=['ovoshi', 'konservaciya'])
+    gen_test_dm_products(shop_name='Овощи от дяди Пети', cats_list=['ovoshi', 'konservaciya'],
+        images=images_onOff)
 
-    gen_test_dm_products(shop_name='Александр самогон', cats_list=['napitki'])
+    gen_test_dm_products(shop_name='Александр самогон', cats_list=['napitki'], images=images_onOff)
 
-    gen_test_dm_products(shop_name='Ольга Буузы', cats_list=['polufabrikati',])
+    gen_test_dm_products(shop_name='Ольга Буузы', cats_list=['polufabrikati',], images=images_onOff)
 
-    gen_test_dm_products(shop_name='мясопродукты Закамны', cats_list=['polufabrikati', 'myaso'])
+    gen_test_dm_products(shop_name='мясопродукты Закамны', cats_list=['polufabrikati', 'myaso'],
+     images=images_onOff)

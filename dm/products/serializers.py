@@ -4,7 +4,6 @@ from rest_framework import serializers
 from products.models import Product, ProductImage, Category, Shop
 
 
-
 class AnnotateFieldsModelSerializer(serializers.ModelSerializer):
     """
     A ModelSerializer that takes an additional `fields` argument that
@@ -32,12 +31,29 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ['catalog_image', 'thumb_image']
 
 
+class ProductImageThumbSerializer(serializers.ModelSerializer):
+    thumb_image = serializers.ReadOnlyField(source='thumb_image.url')
+
+    class Meta:
+        model = ProductImage
+        fields = ['thumb_image']
+
+
 class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.ReadOnlyField(source='category.name')
     images = ProductImageSerializer(many=True)
 
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ['created_at', 'modified_at', 'shop', ]
+
+
+class ProductMiniSerializer(serializers.ModelSerializer):
+    images = ProductImageThumbSerializer(many=True)
+
+    class Meta:
+        model = Product
+        fields = ['images', 'title', 'price']
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -46,7 +62,25 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ShopSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
+class ShopSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shop
+        fields = '__all__'
+
+
+class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
+    category_products = ProductMiniSerializer(many=True)
+    category_images = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Shop
+        exclude = ['created_at', 'modified_at', 'description', 'delivery']
+
+
+class ShopDetailSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+    categories = serializers.ReadOnlyField()
+
     class Meta:
         model = Shop
         fields = '__all__'
