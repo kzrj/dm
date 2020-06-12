@@ -14,7 +14,8 @@ from viberbot.api.messages import (
         TextMessage,
         ContactMessage,
         PictureMessage,
-        VideoMessage
+        VideoMessage,
+        URLMessage
     )
 from viberbot.api.messages.data_types.contact import Contact
 
@@ -101,10 +102,9 @@ def viber_view(request):
     viber_request = viber.parse_request(request.body)
 
     text_message = TextMessage(text="Лариса :)")
+    url_message = URLMessage(media="https://svoyaeda.su/api/");
     viber.send_messages(viber_request.sender.id, [
-        text_message, 
+        text_message, url_message
     ])
-    print('Lara')
-
 
     return HttpResponse('ok', status=200)
