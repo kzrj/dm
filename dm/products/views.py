@@ -110,7 +110,7 @@ ESCAPE_AD_KEYBOARD = {
             "TextHAlign": "center",
             "TextVAlign": "middle",
             "ActionType": "open-url",
-            "ActionBody": "192.168.1.3:3000",
+            "ActionBody": "https://svoyaeda.su",
             "OpenURLType": "internal",
             "BgColor": "#f7bb3f",
             "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
