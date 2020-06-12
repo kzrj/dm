@@ -97,6 +97,26 @@ viber = Api(BotConfiguration(
     auth_token='4ba8b47627e7dd45-896232bcd5f44988-d6eba79009c0e27'
 ))
 
+
+ESCAPE_AD_KEYBOARD = {
+    "Type": "keyboard",
+    "Buttons": [
+       {
+            "Columns": 3,
+            "Rows": 2,
+            "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
+            "TextSize": "regular",
+            "TextHAlign": "center",
+            "TextVAlign": "middle",
+            "ActionType": "open-url",
+            "ActionBody": "https://svoyaeda.su/api/",
+            "BgColor": "#f7bb3f",
+            "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
+        }
+    ],
+    "InputFieldState": 'regular'
+    }
+
 @csrf_exempt
 def viber_view(request):
     viber_request = viber.parse_request(request.body)
@@ -104,7 +124,11 @@ def viber_view(request):
     text_message = TextMessage(text="Лариса :)")
     url_message = URLMessage(media="https://svoyaeda.su/api/");
     viber.send_messages(viber_request.sender.id, [
-        text_message, url_message
+        text_message, url_message,
+        KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
+                                        keyboard=ESCAPE_AD_KEYBOARD,
+                                        min_api_version=6)
+                                      
     ])
 
     return HttpResponse('ok', status=200)
