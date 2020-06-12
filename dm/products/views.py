@@ -109,4 +109,15 @@ def viber_view(request):
     print('Lara')
 
 
-    return HttpResponse({'Lara!'}, status=200)
+    return HttpResponse({
+                       "status":0,
+                       "status_message":"ok",
+                       "event_types":[
+                          "delivered",
+                          "seen",
+                          "failed",
+                          "subscribed",
+                          "unsubscribed",
+                          "conversation_started"
+                       ]
+                    }, status=200)
