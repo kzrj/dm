@@ -6,3 +6,5 @@
 **/media
 **/postgres_data
 !**/frontend/static
+**/certs
+
