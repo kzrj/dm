@@ -15,7 +15,8 @@ from viberbot.api.messages import (
         ContactMessage,
         PictureMessage,
         VideoMessage,
-        URLMessage
+        URLMessage,
+        KeyboardMessage
     )
 from viberbot.api.messages.data_types.contact import Contact
 
