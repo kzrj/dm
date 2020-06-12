@@ -100,8 +100,6 @@ viber = Api(BotConfiguration(
 def viber_view(request):
     viber_request = viber.parse_request(request.body)
 
-    if not viber.verify_signature(request.get_data(), request.headers.get('X-Viber-Content-Signature')):
-        return Response(status=403)
     text_message = TextMessage(text="Лариса :)")
     viber.send_messages(viber_request.sender.id, [
         text_message, 
