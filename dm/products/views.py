@@ -108,4 +108,4 @@ def viber_view(request):
     print('Lara')
 
 
-    return Response(status=200)
+    return Response({}, status=200)
