@@ -4,6 +4,25 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
+from django.views.decorators.csrf import csrf_exempt
+
+from viberbot import Api
+from viberbot.api.bot_configuration import BotConfiguration
+from viberbot.api.messages import VideoMessage
+from viberbot.api.messages import (
+        TextMessage,
+        ContactMessage,
+        PictureMessage,
+        VideoMessage
+    )
+from viberbot.api.messages.data_types.contact import Contact
+
+from viberbot.api.viber_requests import ViberConversationStartedRequest
+from viberbot.api.viber_requests import ViberFailedRequest
+from viberbot.api.viber_requests import ViberMessageRequest
+from viberbot.api.viber_requests import ViberSubscribedRequest
+from viberbot.api.viber_requests import ViberUnsubscribedRequest
+
 from products.serializers import ProductSerializer, CategorySerializer, \
     ShopSerializer, ShopWithProductsSerializer, ShopDetailSerializer
 from products.models import Product, Category, Shop
@@ -70,4 +89,30 @@ class InitTestDataView(APIView):
         return Response({'msg': 'Done.'})
 
 
-    
+viber = Api(BotConfiguration(
+    name='dm-eda',
+    avatar='http://site.com/avatar.jpg',
+    auth_token='4ba8b47627e7dd45-896232bcd5f44988-d6eba79009c0e27'
+))
+
+@csrf_exempt
+def viber_view(request):
+    viber_request = viber.parse_request(request.body)
+
+    if not viber.verify_signature(request.get_data(), request.headers.get('X-Viber-Content-Signature')):
+        return Response(status=403)
+
+    if isinstance(viber_request, ViberMessageRequest):
+        text_message = TextMessage(text="Лариса :)")
+        message = viber_request.message
+        
+        viber.send_messages(viber_request.sender.id, [
+            text_message, 
+        ])
+
+    elif isinstance(viber_request, ViberSubscribedRequest):
+        viber.send_messages(viber_request.get_user.id, [
+            TextMessage(text="thanks for subscribing!")
+        ])
+
+    return Response(status=200)
