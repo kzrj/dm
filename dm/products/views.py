@@ -97,22 +97,15 @@ viber = Api(BotConfiguration(
 
 @csrf_exempt
 def viber_view(request):
-    viber_request = viber.parse_request(request.body)
+    # viber_request = viber.parse_request(request.body)
 
     # if not viber.verify_signature(request.get_data(), request.headers.get('X-Viber-Content-Signature')):
     #     return Response(status=403)
+    # text_message = TextMessage(text="Лариса :)")
+    # viber.send_messages(viber_request.sender.id, [
+    #     text_message, 
+    # ])
+    print('Lara')
 
-    if isinstance(viber_request, ViberMessageRequest):
-        text_message = TextMessage(text="Лариса :)")
-        message = viber_request.message
-        
-        viber.send_messages(viber_request.sender.id, [
-            text_message, 
-        ])
-
-    elif isinstance(viber_request, ViberSubscribedRequest):
-        viber.send_messages(viber_request.get_user.id, [
-            TextMessage(text="thanks for subscribing!")
-        ])
 
     return Response(status=200)
