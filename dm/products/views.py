@@ -153,7 +153,8 @@ def viber_view(request):
 
     elif isinstance(viber_request, ViberSeenRequest):
         return HttpResponse('ok', status=200)
-
+    elif isinstance(viber_request, ViberUnsubscribedRequest):
+        return HttpResponse('ok', status=200)
     else:
         text_message = TextMessage(text="Оппа!")
         url_message = URLMessage(media="https://svoyaeda.su/api/");
