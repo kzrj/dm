@@ -20,11 +20,15 @@ from viberbot.api.messages import (
     )
 from viberbot.api.messages.data_types.contact import Contact
 
-from viberbot.api.viber_requests import ViberConversationStartedRequest
-from viberbot.api.viber_requests import ViberFailedRequest
-from viberbot.api.viber_requests import ViberMessageRequest
-from viberbot.api.viber_requests import ViberSubscribedRequest
-from viberbot.api.viber_requests import ViberUnsubscribedRequest
+from viberbot.api.viber_requests import (
+    ViberConversationStartedRequest,
+    ViberFailedRequest,
+    ViberMessageRequest,
+    ViberSubscribedRequest,
+    ViberUnsubscribedRequest,
+    ViberDeliveredRequest,
+    ViberSeenRequest
+    )
 
 from products.serializers import ProductSerializer, CategorySerializer, \
     ShopSerializer, ShopWithProductsSerializer, ShopDetailSerializer, CreateShopAndProductSerializer
@@ -144,6 +148,12 @@ def viber_view(request):
                                         min_api_version=6)
                                       
         ])
+    elif isinstance(viber_request, ViberDeliveredRequest):
+        return HttpResponse('ok', status=200)
+
+    elif isinstance(viber_request, ViberSeenRequest):
+        return HttpResponse('ok', status=200)
+
     else:
         text_message = TextMessage(text="Оппа!")
         url_message = URLMessage(media="https://svoyaeda.su/api/");
