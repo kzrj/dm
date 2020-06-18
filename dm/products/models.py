@@ -8,7 +8,6 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 
 from core.models import CoreModel, CoreModelManager
 from products.utils import create_resized_image_from_file
-from profiles.models import Profile
 
 
 class Category(CoreModel):
@@ -38,6 +37,7 @@ class ShopQuerySet(models.QuerySet):
             title=kwargs['product_name'],
             category=kwargs['product_category'],
             price=kwargs['product_price'],
+            shop=shop,
             description=kwargs.get('product_add_info', None),
             image=kwargs.get('product_image', None),
             )
@@ -107,7 +107,7 @@ class Shop(CoreModel):
 class PhoneNumber(CoreModel):
     phone = models.CharField(max_length=12)
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, related_name='phones')
-    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='phones')
+    profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, related_name='phones')
 
     def __str__(self):
         return self.phone
@@ -123,7 +123,8 @@ class ProductManager(CoreModelManager):
             .select_related('category').prefetch_related('images')
 
     def create_product(self, title, category, shop, price, description=None, image=None):
-        product = self.create(title=title, category=category, shop=shop, description=description)
+        product = self.create(title=title, category=category, shop=shop, description=description,
+         price=price)
 
         if image:
             product.images.create_product_image(image_file=image, product=product)

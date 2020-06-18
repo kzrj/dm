@@ -59,7 +59,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
     queryset = Shop.objects.all() \
-        .add_products_count_by_dm_cat()
+        # .add_products_count_by_dm_cat()
     serializer_class = ShopSerializer
     filter_class = ShopFilter
 
@@ -110,38 +110,49 @@ viber = Api(BotConfiguration(
 ))
 
 
-ESCAPE_AD_KEYBOARD = {
-    "Type": "keyboard",
-    "Buttons": [
-       {
-            "Columns": 3,
-            "Rows": 2,
-            "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
-            "TextSize": "regular",
-            "TextHAlign": "center",
-            "TextVAlign": "middle",
-            "ActionType": "open-url",
-            "ActionBody": "https://svoyaeda.su",
-            "OpenURLType": "internal",
-            "BgColor": "#f7bb3f",
-            "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
+def login_keyboard(viber_id=None):
+    return ESCAPE_AD_KEYBOARD = {
+        "Type": "keyboard",
+        "Buttons": [
+           {
+                "Columns": 3,
+                "Rows": 2,
+                "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
+                "TextSize": "regular",
+                "TextHAlign": "center",
+                "TextVAlign": "middle",
+                "ActionType": "open-url",
+                "ActionBody": f"https://svoyaeda.su/{viber_id}",
+                "OpenURLType": "internal",
+                "BgColor": "#f7bb3f",
+                "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
+            }
+        ],
+        "InputFieldState": 'regular'
         }
-    ],
-    "InputFieldState": 'regular'
-    }
 
 @csrf_exempt
 def viber_view(request):
     viber_request = viber.parse_request(request.body)
 
-    text_message = TextMessage(text="Лариса :)")
-    url_message = URLMessage(media="https://svoyaeda.su/api/");
-    viber.send_messages(viber_request.sender.id, [
-        text_message, url_message,
-        KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
-                                        keyboard=ESCAPE_AD_KEYBOARD,
+    if isinstance(viber_request, ViberConversationStartedRequest):
+        text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
+        viber.send_messages(viber_request.get_user.id, [
+            text_message, 
+            KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
+                                        keyboard=login_keyboard(),
                                         min_api_version=6)
                                       
-    ])
+        ])
+    else:
+        text_message = TextMessage(text="Оппа!")
+        url_message = URLMessage(media="https://svoyaeda.su/api/");
+        viber.send_messages(viber_request.sender.id, [
+            text_message, url_message,
+            KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
+                                            keyboard=login_keyboard(),
+                                            min_api_version=6)
+                                          
+        ])
 
     return HttpResponse('ok', status=200)

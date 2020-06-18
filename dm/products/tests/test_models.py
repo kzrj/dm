@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.test import TransactionTestCase
+from django.test import TransactionTestCase, tag
 
 from products.models import Shop, Category, Product, ProductImage
 
@@ -46,11 +46,41 @@ class ShopTest(TransactionTestCase):
         with self.assertNumQueries(3):
             shops = Shop.objects.filter().add_category_products(category_name='polufabrikati')
             bool(shops)
-            self.assertEqual(hasattr(shops[0], 'category_products'), True) 
+            self.assertEqual(hasattr(shops[0], 'category_products'), True)
 
+    @tag('with_file')
+    def test_create_shop_with_product(self):
+        category = Category.objects.all().first()
+        image = open('../data/polufabrikati.jpg', 'rb')
+
+        data = {
+            'shop_name': 'Test shop',
+            'shop_phone': '79148569874',
+            'shop_add_info': None,
+            'shop_delivery': None,
+
+            'product_name': 'test product',
+            'product_category': category,
+            'product_price': '100 za shtuku',
+            'product_add_info': None,
+            'product_image': image
+        }
+
+        shop = Shop.objects.create_shop_with_product(**data)
+        self.assertEqual(shop.name, data['shop_name'])
+        self.assertEqual(shop.phones.all().first().phone, data['shop_phone'])
+
+        product = shop.products.all().first()
+        self.assertEqual(product.title, data['product_name'])
+        self.assertEqual(product.category, data['product_category'])
+        self.assertEqual(product.price, data['product_price'])
+
+        image = product.images.all().first()
+        self.assertEqual(image.catalog_image.name, f'catalog_{product.pk}.jpg')
 
 
 class ImageCreationTest(TransactionTestCase):
+    @tag('with_file')
     def test_create_resized_image_from_file(self):
         with open('../data/polufabrikati.jpg', 'rb') as file:
             pimage = ProductImage.objects.create_product_image(image_file=file)

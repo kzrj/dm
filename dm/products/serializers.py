@@ -93,7 +93,7 @@ class CreateShopAndProductSerializer(serializers.Serializer):
     shop_delivery = serializers.CharField()
 
     product_name = serializers.CharField()
-    product_category = serializers.CharField()
+    product_category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
     product_price = serializers.CharField()
     product_add_info = serializers.CharField()
     product_image = serializers.FileField()

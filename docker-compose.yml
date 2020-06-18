@@ -21,8 +21,6 @@ services:
     image: postgres:10.1-alpine
     # ports: 
     #   - "5432:5432"
-    # volumes:
-    #   - ./postgres_data:/var/lib/postgresql
 
   backend:
     build: .
@@ -31,10 +29,7 @@ services:
     # command: bash -c "cd dm &&
     #                   python manage.py migrate &&
     #                   python manage.py makemigrations --no-input &&
-    #                   python manage.py test products.tests.test_models.SerializersTest"
-                      # python manage.py test workshopfour.tests.test_views"
-                      # python manage.py test transactions.tests.test_models"
-                      # python manage.py test sows.tests.test_managers"
+    #                   python manage.py test products.tests.test_models.ShopTest"
 
     restart: unless-stopped
     command: bash -c "cd dm && 
@@ -42,14 +37,8 @@ services:
                       python manage.py migrate &&
                       python manage.py collectstatic --no-input &&
                       gunicorn dm.wsgi -b 0.0.0.0:8000"
-                      # python manage.py runserver 0.0.0.0:8000"
-                      # python manage.py makemigrations --no-input &&
-                      # python manage.py migrate &&
    
     volumes:
       - .:/code
     ports:
       - "8000"
-         
-# volumes:
-  # postgres_data:
