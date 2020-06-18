@@ -111,24 +111,24 @@ viber = Api(BotConfiguration(
 
 
 def login_keyboard(viber_id=None):
-    return ESCAPE_AD_KEYBOARD = {
-        "Type": "keyboard",
-        "Buttons": [
-           {
-                "Columns": 3,
-                "Rows": 2,
-                "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
-                "TextSize": "regular",
-                "TextHAlign": "center",
-                "TextVAlign": "middle",
-                "ActionType": "open-url",
-                "ActionBody": f"https://svoyaeda.su/{viber_id}",
-                "OpenURLType": "internal",
-                "BgColor": "#f7bb3f",
-                "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
-            }
-        ],
-        "InputFieldState": 'regular'
+    return {
+            "Type": "keyboard",
+            "Buttons": [
+               {
+                    "Columns": 3,
+                    "Rows": 2,
+                    "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
+                    "TextSize": "regular",
+                    "TextHAlign": "center",
+                    "TextVAlign": "middle",
+                    "ActionType": "open-url",
+                    "ActionBody": f"https://svoyaeda.su/{viber_id}",
+                    "OpenURLType": "internal",
+                    "BgColor": "#f7bb3f",
+                    "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
+                }
+            ],
+            "InputFieldState": 'regular'
         }
 
 @csrf_exempt
