@@ -126,7 +126,7 @@ def login_keyboard(viber_id=None):
                     "TextHAlign": "center",
                     "TextVAlign": "middle",
                     "ActionType": "open-url",
-                    "ActionBody": f"https://svoyaeda.su/{viber_id}",
+                    "ActionBody": f"https://svoyaeda.su/dm/login/v/{viber_id}",
                     "OpenURLType": "internal",
                     "BgColor": "#f7bb3f",
                     "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
@@ -144,9 +144,8 @@ def viber_view(request):
         viber.send_messages(viber_request.user.id, [
             text_message, 
             KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
-                                        keyboard=login_keyboard(),
-                                        min_api_version=6)
-                                      
+                            keyboard=login_keyboard(viber_request.user.id),
+                            min_api_version=6)
         ])
     elif isinstance(viber_request, ViberDeliveredRequest):
         return HttpResponse('ok', status=200)
@@ -161,9 +160,8 @@ def viber_view(request):
         viber.send_messages(viber_request.sender.id, [
             text_message, url_message,
             KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
-                                            keyboard=login_keyboard(),
-                                            min_api_version=6)
-                                          
+                            keyboard=login_keyboard(viber_request.sender.id),
+                            min_api_version=6)
         ])
 
     return HttpResponse('ok', status=200)
