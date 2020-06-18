@@ -137,7 +137,7 @@ def viber_view(request):
 
     if isinstance(viber_request, ViberConversationStartedRequest):
         text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
-        viber.send_messages(viber_request.get_user.id, [
+        viber.send_messages(viber_request.user.id, [
             text_message, 
             KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
                                         keyboard=login_keyboard(),
