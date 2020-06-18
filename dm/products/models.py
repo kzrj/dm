@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 
 from core.models import CoreModel, CoreModelManager
 from products.utils import create_resized_image_from_file
+from profiles.models import Profile
 
 
 class Category(CoreModel):
@@ -25,6 +26,29 @@ class Category(CoreModel):
 
 
 class ShopQuerySet(models.QuerySet):
+    def create_shop_with_product(self, **kwargs):
+        shop = self.create(
+            name=kwargs['shop_name'],
+            description=kwargs.get('shop_add_info', None),
+            delivery=kwargs.get('shop_delivery', None),
+            )
+        shop.phones.create(phone=kwargs['shop_phone'], shop=shop)
+
+        shop.products.create_product(
+            title=kwargs['product_name'],
+            category=kwargs['product_category'],
+            price=kwargs['product_price'],
+            description=kwargs.get('product_add_info', None),
+            image=kwargs.get('product_image', None),
+            )
+
+        if kwargs.get('user', None):
+            profile = kwargs['user'].profile
+            profile.shop = shop
+            profile.save()
+
+        return shop
+
     def add_products_count_by_dm_cat(self):
         data = dict()
 
@@ -80,6 +104,15 @@ class Shop(CoreModel):
                 .values_list('category__name', 'category__ru_name')))
 
 
+class PhoneNumber(CoreModel):
+    phone = models.CharField(max_length=12)
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, related_name='phones')
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, related_name='phones')
+
+    def __str__(self):
+        return self.phone
+
+
 class ProductQuerySet(models.QuerySet):
     pass
 
@@ -88,6 +121,14 @@ class ProductManager(CoreModelManager):
     def get_queryset(self):
         return ProductQuerySet(self.model, using=self._db) \
             .select_related('category').prefetch_related('images')
+
+    def create_product(self, title, category, shop, price, description=None, image=None):
+        product = self.create(title=title, category=category, shop=shop, description=description)
+
+        if image:
+            product.images.create_product_image(image_file=image, product=product)
+
+        return product
 
 
 class Product(CoreModel):
@@ -118,9 +159,9 @@ class ProductImageManager(CoreModelManager):
 
     def create_product_image(self, image_file, product=None):
         product_image = self.create(product=product)
-        name = image_file.name.split('/')[-1]
-
-        product_image.original.save('test.jpg', image_file)
+        # name = image_file.name.split('/')[-1]
+        product_pk = product.pk if product else 0
+        product_image.original.save(f'{product.pk}.jpg', image_file)
 
         catalog_image_name = f'catalog_{product_image.original.name}'
         catalog_image = create_resized_image_from_file(image_file, 480)

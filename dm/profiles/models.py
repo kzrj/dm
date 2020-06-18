@@ -21,8 +21,8 @@ class Profile(CoreModel):
      related_name="profile")
     nickname = models.CharField(max_length=20)
     description = models.TextField(null=True, blank=True)
-    phone = models.CharField(max_length=11, null=True, blank=True)
-    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, blank=True)
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True,
+         blank=True, related_name='profiles')
 
     viber_id = models.CharField(max_length=100, null=True, blank=True)
     viber_name = models.CharField(max_length=100, null=True, blank=True)

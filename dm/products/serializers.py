@@ -84,3 +84,16 @@ class ShopDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
         fields = '__all__'
+
+
+class CreateShopAndProductSerializer(serializers.Serializer):
+    shop_name = serializers.CharField()
+    shop_phone = serializers.CharField()
+    shop_add_info = serializers.CharField(required=False)
+    shop_delivery = serializers.CharField()
+
+    product_name = serializers.CharField()
+    product_category = serializers.CharField()
+    product_price = serializers.CharField()
+    product_add_info = serializers.CharField()
+    product_image = serializers.FileField()

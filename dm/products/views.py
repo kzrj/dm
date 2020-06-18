@@ -27,11 +27,9 @@ from viberbot.api.viber_requests import ViberSubscribedRequest
 from viberbot.api.viber_requests import ViberUnsubscribedRequest
 
 from products.serializers import ProductSerializer, CategorySerializer, \
-    ShopSerializer, ShopWithProductsSerializer, ShopDetailSerializer
+    ShopSerializer, ShopWithProductsSerializer, ShopDetailSerializer, CreateShopAndProductSerializer
 from products.models import Product, Category, Shop
-
 from products.testing_utils import create_test_dm_products
-
 from products.filters import ShopFilter
 
 
@@ -84,6 +82,19 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
                 return self.get_paginated_response(serializer.data)
 
         return super().list(request)
+
+    @action(methods=['post'], detail=False)
+    def create_shop_and_product(self, request):
+        serializer = CreateShopAndProductSerializer(data=request.data)
+        if serializer.is_valid():
+            shop = Shop.objects.create_shop_with_product(**serializer.validated_data)
+            return Response(
+                {
+                    "message": "Created"
+                },
+                status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class InitTestDataView(APIView):
