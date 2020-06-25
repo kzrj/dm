@@ -166,6 +166,7 @@ def login_keyboard(viber_id=None):
 def viber_view(request):
     viber_request = viber.parse_request(request.body)
     text_message = TextMessage(text="Оппа!")
+    msgs = [text_message for i in range(0, 10)]
 
     if isinstance(viber_request, ViberConversationStartedRequest):
         text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!", trackingData='FIRST_LOGIN')
@@ -188,10 +189,10 @@ def viber_view(request):
                 text_message
             ])
     elif viber_request.message.text == 'MASS_MESSAGES2':
-        msgs = [text_message for i in range(0, 10)]
         viber.send_messages(viber_request.sender.id, msgs)
     else:
-        text_message = TextMessage(text="Оппа!")
+        # text_message = TextMessage(text="Оппа!")
+        viber.send_messages(viber_request.sender.id, msgs)
         url_message = URLMessage(media="https://svoyaeda.su/api/");
         viber.send_messages(viber_request.sender.id, [
             text_message, url_message,
