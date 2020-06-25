@@ -115,6 +115,9 @@ viber = Api(BotConfiguration(
 
 
 def login_keyboard(viber_id=None):
+    # get or create user with profile.viber_id = viber_id
+    # gen token
+    token = 'token'
     return {
             "Type": "keyboard",
             "Buttons": [
@@ -126,11 +129,23 @@ def login_keyboard(viber_id=None):
                     "TextHAlign": "center",
                     "TextVAlign": "middle",
                     "ActionType": "open-url",
-                    "ActionBody": f"https://svoyaeda.su/dm/login/v/{viber_id}",
+                    "ActionBody": f"https://svoyaeda.su/dm/login/v/{token}",
                     "OpenURLType": "internal",
                     "BgColor": "#f7bb3f",
                     "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
-                }
+                },
+                {
+                    "Columns": 2,
+                    "Rows": 3,
+                    "BgColor": "#e6f5ff",
+                    "BgMedia": "http://link.to.button.image",
+                    "BgMediaType": "picture",
+                    "BgLoop": True,
+                    "ActionType": "reply",
+                    "ActionBody": "MASS_MESSAGES",
+                    "ReplyType": "message",
+                    "Text": "Много месаг"
+                },
             ],
             "InputFieldState": 'regular'
         }
@@ -138,9 +153,10 @@ def login_keyboard(viber_id=None):
 @csrf_exempt
 def viber_view(request):
     viber_request = viber.parse_request(request.body)
+    text_message = TextMessage(text="Оппа!")
 
     if isinstance(viber_request, ViberConversationStartedRequest):
-        text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
+        text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!", trackingData='FIRST_LOGIN')
         viber.send_messages(viber_request.user.id, [
             text_message, 
             # KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
@@ -154,6 +170,11 @@ def viber_view(request):
         return HttpResponse('ok', status=200)
     elif isinstance(viber_request, ViberUnsubscribedRequest):
         return HttpResponse('ok', status=200)
+    elif viber_request.message.tracking_data == 'MASS_MESSAGES':
+        for i in range(0, 10):
+            viber.send_messages(viber_request.sender.id, [
+                text_message
+            ])
     else:
         text_message = TextMessage(text="Оппа!")
         url_message = URLMessage(media="https://svoyaeda.su/api/");
