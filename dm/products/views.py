@@ -165,8 +165,6 @@ def login_keyboard(viber_id=None):
 @csrf_exempt
 def viber_view(request):
     
-    return HttpResponse('ok', status=200)
-    
     viber_request = viber.parse_request(request.body)
 
     text_message = TextMessage(text="Оппа!")
