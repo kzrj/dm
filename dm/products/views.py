@@ -122,7 +122,7 @@ def login_keyboard(viber_id=None):
             "Type": "keyboard",
             "Buttons": [
                {
-                    "Columns": 3,
+                    "Columns": 2,
                     "Rows": 2,
                     "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
                     "TextSize": "regular",
@@ -145,6 +145,18 @@ def login_keyboard(viber_id=None):
                     "ActionBody": "MASS_MESSAGES",
                     "ReplyType": "message",
                     "Text": "Много месаг"
+                },
+                {
+                    "Columns": 2,
+                    "Rows": 2,
+                    "BgColor": "#e6f5ff",
+                    "BgMedia": "http://link.to.button.image",
+                    "BgMediaType": "picture",
+                    "BgLoop": True,
+                    "ActionType": "reply",
+                    "ActionBody": "MASS_MESSAGES2",
+                    "ReplyType": "message",
+                    "Text": "Много месаг2"
                 },
             ],
             "InputFieldState": 'regular'
@@ -175,6 +187,9 @@ def viber_view(request):
             viber.send_messages(viber_request.sender.id, [
                 text_message
             ])
+    elif viber_request.message.tracking_data == 'MASS_MESSAGES2':
+        msgs = (text_message for i in range(0, 10))
+        viber.send_messages(viber_request.sender.id, msgs)
     else:
         text_message = TextMessage(text="Оппа!")
         url_message = URLMessage(media="https://svoyaeda.su/api/");
