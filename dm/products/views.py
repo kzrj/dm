@@ -188,7 +188,7 @@ def viber_view(request):
                 text_message
             ])
     elif viber_request.message.text == 'MASS_MESSAGES2':
-        msgs = (text_message for i in range(0, 10))
+        msgs = [text_message for i in range(0, 10)]
         viber.send_messages(viber_request.sender.id, msgs)
     else:
         text_message = TextMessage(text="Оппа!")
