@@ -136,7 +136,7 @@ def login_keyboard(viber_id=None):
                 },
                 {
                     "Columns": 2,
-                    "Rows": 3,
+                    "Rows": 2,
                     "BgColor": "#e6f5ff",
                     "BgMedia": "http://link.to.button.image",
                     "BgMediaType": "picture",
