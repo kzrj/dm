@@ -174,7 +174,7 @@ def viber_view(request):
     msgs = [text_message for i in range(0, 10)]
 
     if isinstance(viber_request, ViberConversationStartedRequest):
-    	viber_user = viber_request.user
+        viber_user = viber_request.user
 
         text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!", trackingData='FIRST_LOGIN')
         viber.send_messages(viber_request.user.id, [
@@ -184,9 +184,9 @@ def viber_view(request):
             #                 min_api_version=6)
         ])
     else:
-    	viber_user = viber_request.sender
+        viber_user = viber_request.sender
 
-   	customer, created = Profile.objects.get_or_create(
+    customer, created = Profile.objects.get_or_create(
             viber_id=viber_user.id,
             viber_name=viber_user.name,
             viber_avatar=viber_user.avatar,
