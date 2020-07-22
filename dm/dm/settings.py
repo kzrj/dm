@@ -129,7 +129,7 @@ REST_FRAMEWORK = {
 # JWT
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=365),
-    # 'JWT_RESPONSE_PAYLOAD_HANDLER': 'core.utils.jwt_response_payload_handler'
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'core.utils.jwt_response_payload_handler'
 }
 
 # Password validation

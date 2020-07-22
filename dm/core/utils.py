@@ -13,6 +13,8 @@ from django.utils.encoding import force_text
 from django.core.mail import send_mail
 from django.db.utils import IntegrityError as DjangoIntegrityError
 
+from profiles.serializers import ProfileSerializer
+
 
 class CustomValidation(exceptions.APIException):
     status_code = status.HTTP_400_BAD_REQUEST
@@ -52,11 +54,11 @@ def custom_exception_handler(exc, context):
     return drf_exception_handler(exc, context)
 
 
-# def jwt_response_payload_handler(token, user=None, request=None):
-#     return {
-#         'token': token,
-#         'user': WorkshopEmployeeSerializer(user.employee).data
-#     }
+def jwt_response_payload_handler(token, user=None, request=None):
+    return {
+        'token': token,
+        'profile': ProfileSerializer(user.profile).data
+    }
 
 
 def create_token(user):
