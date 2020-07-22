@@ -12,7 +12,34 @@ class ProfileQuerySet(models.QuerySet):
 
 
 class ProfileManager(CoreModelManager):
-    pass
+    @staticmethod
+    def gen_username():
+        last_user = User.objects.all().order_by('-pk').first()
+        unique = False
+        username = ''
+
+        if last_user:
+            _id = 1
+            while not unique:
+                username = f'user_{(last_user.pk + _id)}'
+                user = User.objects.filter(username=username).first()
+                if user:
+                    _id += 1
+                else:
+                    unique = True
+        else:
+            username = 'user_1'
+
+        return username
+
+    def get_or_create_profile_viber(self, viber_id, viber_name, viber_avatar=None):
+        profile = self.filter(viber_id=viber_id).first()
+        if profile:
+            return profile
+
+        user = User.objects.create_user(username=self.gen_username())
+        return self.create(user=user, nickname=viber_name, viber_id=viber_id, viber_name=viber_name,
+            viber_avatar=viber_avatar)
 
 
 class Profile(CoreModel):

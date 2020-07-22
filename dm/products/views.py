@@ -66,7 +66,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
     queryset = Shop.objects.all() \
-        .add_products_count_by_dm_cat()
+        # .add_products_count_by_dm_cat()
     serializer_class = ShopSerializer
     filter_class = ShopFilter
 
@@ -186,7 +186,7 @@ def viber_view(request):
     else:
         viber_user = viber_request.sender
 
-    customer, created = Profile.objects.get_or_create(
+    customer = Profile.objects.get_or_create_profile_viber(
             viber_id=viber_user.id,
             viber_name=viber_user.name,
             viber_avatar=viber_user.avatar,
@@ -206,7 +206,7 @@ def viber_view(request):
         # text_message = TextMessage(text="Оппа!")
         viber.send_messages(viber_request.sender.id, msgs)
         url_message = URLMessage(media="https://svoyaeda.su/api/");
-        token = create_token(customer)
+        token = create_token(customer.user)
         viber.send_messages(viber_request.sender.id, [
             text_message, url_message,
             KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
