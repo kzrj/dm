@@ -204,7 +204,7 @@ def viber_view(request):
         viber.send_messages(viber_request.sender.id, msgs)
     else:
         # text_message = TextMessage(text="Оппа!")
-        viber.send_messages(viber_request.sender.id, msgs)
+        # viber.send_messages(viber_request.sender.id, msgs)
         url_message = URLMessage(media="https://svoyaeda.su/api/");
         token = create_token(customer.user)
         viber.send_messages(viber_request.sender.id, [
