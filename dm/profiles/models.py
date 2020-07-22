@@ -18,7 +18,7 @@ class ProfileManager(CoreModelManager):
 class Profile(CoreModel):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,
      related_name="profile")
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     shop = models.ForeignKey('products.Shop', on_delete=models.SET_NULL, null=True,
          blank=True, related_name='profiles')

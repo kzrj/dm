@@ -7,6 +7,7 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 
 from rest_framework import status, exceptions
 from rest_framework.views import exception_handler as drf_exception_handler
+from rest_framework_jwt.settings import api_settings
 
 from django.utils.encoding import force_text
 from django.core.mail import send_mail
@@ -56,3 +57,11 @@ def custom_exception_handler(exc, context):
 #         'token': token,
 #         'user': WorkshopEmployeeSerializer(user.employee).data
 #     }
+
+
+def create_token(user):
+    jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+    jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
+    payload = jwt_payload_handler(user)
+    return jwt_encode_handler(payload)
