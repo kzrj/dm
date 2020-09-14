@@ -105,4 +105,4 @@ class CreateShopSerializer(serializers.Serializer):
     phone = serializers.CharField()
     delivery = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
-    profile = serializers.PrimaryKeyRelatedField(source=Profile.objects.all())
+    profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
