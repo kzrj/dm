@@ -37,7 +37,7 @@ from products.models import Product, Category, Shop
 from products.testing_utils import create_test_dm_products
 from products.filters import ShopFilter
 from profiles.models import Profile
-from profile.serializers import ProfileSerializer
+from profiles.serializers import ProfileSerializer
 
 from core.utils import create_token
 
