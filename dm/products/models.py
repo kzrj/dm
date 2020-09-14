@@ -52,13 +52,14 @@ class ShopQuerySet(models.QuerySet):
     def add_products_count_by_dm_cat(self):
         data = dict()
 
-        for cat in Category.objects.filter(category_type='dm'):
-            subquery = Product.objects.filter(shop__pk=OuterRef('pk'), category=cat) \
-                        .values('category') \
-                        .annotate(cnt=Count('*')) \
-                        .values('cnt')
-            data[f'{cat.name}_count'] = Coalesce(Subquery(subquery, 
-                output_field=models.IntegerField()), 0)
+        if Product.objects.all().count() > 0:
+            for cat in Category.objects.filter(category_type='dm'):
+                subquery = Product.objects.filter(shop__pk=OuterRef('pk'), category=cat) \
+                            .values('category') \
+                            .annotate(cnt=Count('*')) \
+                            .values('cnt')
+                data[f'{cat.name}_count'] = Coalesce(Subquery(subquery, 
+                    output_field=models.IntegerField()), 0)
 
         return self.annotate(**data)
 

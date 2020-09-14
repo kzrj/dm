@@ -29,7 +29,7 @@ services:
     # command: bash -c "cd dm &&
     #                   python manage.py migrate &&
     #                   python manage.py makemigrations --no-input &&
-    #                   python manage.py test profiles.tests.test_models"
+    #                   python manage.py test jobs.tests.test_models.JobImageTest"
 
     restart: unless-stopped
     command: bash -c "cd dm && 
