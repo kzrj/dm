@@ -74,6 +74,8 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'retrieve':
             return ShopDetailSerializer
+        if self.action == 'create':
+            return CreateShopSerializer
         return ShopSerializer
 
     def list(self, request):
@@ -106,8 +108,7 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=['post'], detail=False)
-    def create_shop(self, request):
+    def create(self, request):
         serializer = CreateShopSerializer(data=request.data)
         if serializer.is_valid():
             shop = Shop.objects.create_shop(**serializer.validated_data)
