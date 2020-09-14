@@ -54,7 +54,7 @@ class ShopQuerySet(models.QuerySet):
         shop.phones.create(phone=phone, shop=shop)
         profile.shop = shop
         profile.save()
-        
+
         return shop
 
     def add_products_count_by_dm_cat(self):
@@ -85,7 +85,7 @@ class ShopQuerySet(models.QuerySet):
 
 
 class Shop(CoreModel):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
     description = models.TextField(null=True)
     delivery = models.CharField(max_length=100, null=True, blank=True)
 
