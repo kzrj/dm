@@ -80,7 +80,9 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
 
         if category_name:
             queryset = self.filter_queryset(
-                self.queryset.add_category_products(category_name=category_name))
+                self.queryset \
+                    .add_products_count_by_dm_cat() \
+                    .add_category_products(category_name=category_name))
             serializer = ShopWithProductsSerializer(queryset, many=True)
 
             page = self.paginate_queryset(queryset)
