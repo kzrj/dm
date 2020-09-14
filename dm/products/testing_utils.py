@@ -4,6 +4,7 @@ import random
 from django.contrib.auth.models import User
 
 from products.models import Shop, Category, Product, ProductImage
+from profiles.models import Profile
 
 
 def create_test_dm_categories():
@@ -48,7 +49,9 @@ def gen_test_dm_products(shop_name, cats_list, images=True):
 
 
 def create_test_dm_products(images_onOff=True):
-    User.objects.create_superuser(username='kaizerj',email='kzrster@gmail.com', password='jikozfree')
+    User.objects.create_superuser(username='kaizerj', email='kzrster@gmail.com', password='jikozfree')
+    user = User.objects.create_user(username='kzr', password='qwerty123')
+    Profile.objects.create(user=user)
 
     create_test_dm_categories()
     create_test_dm_shops()
