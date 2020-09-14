@@ -2,6 +2,7 @@
 from rest_framework import serializers
 
 from products.models import Product, ProductImage, Category, Shop
+from profiles.models import Profile
 
 
 class AnnotateFieldsModelSerializer(serializers.ModelSerializer):
@@ -97,3 +98,11 @@ class CreateShopAndProductSerializer(serializers.Serializer):
     product_price = serializers.CharField()
     product_add_info = serializers.CharField()
     product_image = serializers.FileField()
+
+
+class CreateShopSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    phone = serializers.CharField()
+    delivery = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)
+    profile = serializers.PrimaryKeyRelatedField(source=Profile.objects.all())

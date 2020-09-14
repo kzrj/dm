@@ -49,9 +49,17 @@ class ShopQuerySet(models.QuerySet):
 
         return shop
 
+    def create_shop(self, name, phone, profile, delivery=None, description=None):
+        shop = self.create(name=name, description=description, delivery=delivery)
+        shop.phones.create(phone=phone, shop=shop)
+        profile.shop = shop
+        profile.save()
+        
+        return shop
+
     def add_products_count_by_dm_cat(self):
         data = dict()
-        
+
         for cat in Category.objects.filter(category_type='dm'):
             subquery = Product.objects.filter(shop__pk=OuterRef('pk'), category=cat) \
                         .values('category') \
@@ -73,7 +81,7 @@ class ShopQuerySet(models.QuerySet):
                                                     .prefetch_related('images'),
                             to_attr='category_products'
                         )
-                    ) \
+                    )
 
 
 class Shop(CoreModel):
@@ -179,6 +187,8 @@ class ProductImage(CoreModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images',
          null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='images',
+         null=True, blank=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, related_name='images',
          null=True, blank=True)
     original = models.FileField(null=True, blank=True)
     catalog_image = models.FileField(null=True, blank=True)

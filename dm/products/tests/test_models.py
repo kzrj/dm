@@ -2,6 +2,7 @@
 from django.test import TransactionTestCase, tag
 
 from products.models import Shop, Category, Product, ProductImage
+from profiles.models import Profile
 
 import products.testing_utils as product_testing
 from products.utils import create_resized_image_from_file
@@ -77,6 +78,17 @@ class ShopTest(TransactionTestCase):
 
         image = product.images.all().first()
         self.assertEqual(image.catalog_image.name, f'catalog_{product.pk}.jpg')
+
+    def test_create_shop(self):
+        profile = Profile.objects.get(username='kzr')
+        shop = Shop.objects.create_shop(name='test shop', phone='123', profile=profile,
+            delivery='delivery', description='description')
+        self.assertEqual(shop.name, 'test shop')
+        self.assertEqual(shop.description, 'description')
+        self.assertEqual(shop.phones.all().first(), '123')
+
+        profile.refresh_from_db()
+        self.assertEqual(profile.shop, shop)
 
 
 class ImageCreationTest(TransactionTestCase):
