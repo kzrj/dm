@@ -37,6 +37,7 @@ from products.models import Product, Category, Shop
 from products.testing_utils import create_test_dm_products
 from products.filters import ShopFilter
 from profiles.models import Profile
+from profile.serializers import ProfileSerializer
 
 from core.utils import create_token
 
@@ -110,9 +111,13 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
         serializer = CreateShopSerializer(data=request.data)
         if serializer.is_valid():
             shop = Shop.objects.create_shop(**serializer.validated_data)
+            profile = serializer.validated_data['profile_id']
+            profile.refresh_from_db()
             return Response(
                 {
-                    "message": "Created"
+                    "message": "Created",
+                    "shop": ShopDetailSerializer(shop).data,
+                    "profile": ProfileSerializer(profile).data
                 },
                 status=status.HTTP_200_OK)
         else:
