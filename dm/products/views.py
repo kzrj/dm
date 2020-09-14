@@ -112,7 +112,7 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
         serializer = CreateShopSerializer(data=request.data)
         if serializer.is_valid():
             shop = Shop.objects.create_shop(**serializer.validated_data)
-            profile = serializer.validated_data['profile_id']
+            profile = serializer.validated_data['profile']
             profile.refresh_from_db()
             return Response(
                 {
