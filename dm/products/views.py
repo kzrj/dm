@@ -76,6 +76,8 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
             return ShopDetailSerializer
         if self.action == 'create':
             return CreateShopSerializer
+        if self.action == 'partial_update':
+            return JobUpdateSerializer
         return ShopSerializer
 
     def list(self, request):

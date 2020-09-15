@@ -31,7 +31,7 @@ class ShopQuerySet(models.QuerySet):
             description=kwargs.get('shop_add_info', None),
             delivery=kwargs.get('shop_delivery', None),
             )
-        shop.phones.create(phone=kwargs['shop_phone'], shop=shop)
+        shop.contacts.create(phone=kwargs['shop_phone'], shop=shop)
 
         shop.products.create_product(
             title=kwargs['product_name'],
@@ -51,7 +51,7 @@ class ShopQuerySet(models.QuerySet):
 
     def create_shop(self, name, phone, profile, delivery=None, description=None):
         shop = self.create(name=name, description=description, delivery=delivery)
-        shop.phones.create(phone=phone, shop=shop)
+        shop.contacts.create(phone=phone, shop=shop)
         profile.shop = shop
         profile.save()
 
@@ -112,10 +112,10 @@ class Shop(CoreModel):
                 .values_list('category__name', 'category__ru_name')))
 
 
-class PhoneNumber(CoreModel):
+class ContactCoreModel):
     phone = models.CharField(max_length=12)
-    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, related_name='phones')
-    profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, related_name='phones')
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, related_name='contacts')
+    profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, related_name='contacts')
 
     def __str__(self):
         return self.phone
