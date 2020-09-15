@@ -111,4 +111,4 @@ class CreateShopSerializer(serializers.Serializer):
 class UpdateShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = ['name', 'delivery', 'description']
+        fields = ['id', 'name', 'delivery', 'description']
