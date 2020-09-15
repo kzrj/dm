@@ -112,7 +112,7 @@ class Shop(CoreModel):
                 .values_list('category__name', 'category__ru_name')))
 
 
-class ContactCoreModel:
+class Contact(CoreModel):
     phone = models.CharField(max_length=12)
     shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True, related_name='contacts')
     profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, related_name='contacts')
