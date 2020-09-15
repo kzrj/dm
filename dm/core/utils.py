@@ -58,7 +58,7 @@ def custom_exception_handler(exc, context):
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
-        'profile': ProfileSerializer(user.profile).data
+        'profile': ProfileSerializer(user.profile).data,
         'shop': ShopDetailSerializer(user.profile.shop).data
     }
 
