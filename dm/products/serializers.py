@@ -57,6 +57,12 @@ class ProductMiniSerializer(serializers.ModelSerializer):
         fields = ['images', 'title', 'price']
 
 
+class CreateProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['title', 'price', 'description']
+
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category

@@ -56,6 +56,26 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return CreateProductSerializer
+        if self.action == 'partial_update':
+            return CreateProductSerializer
+        return self.serializer_class
+
+    def create(self, request):
+        serializer = CreateProductSerializer(data=request.data)
+        if serializer.is_valid():
+            product = Product.objects.create_product(
+                title=serializer.validated_data['title'],
+                price=serializer.validated_data['price'],
+                description=serializer.validated_data['description'],
+                shop=request.user.profile.shop
+            )
+            return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
