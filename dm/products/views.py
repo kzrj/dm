@@ -57,7 +57,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 
-class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
+class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
     filter_class = ShopFilter
