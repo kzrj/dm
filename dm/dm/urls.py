@@ -12,10 +12,13 @@ from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from products.views import ProductViewSet, CategoryViewSet, ShopViewSet, InitTestDataView, viber_view
+from profiles.views import ContactViewSet
+
 router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet, basename='products')
 router.register(r'categories', CategoryViewSet, basename='categories')
 router.register(r'shops', ShopViewSet, basename='shops')
+router.register(r'contacts', ContactViewSet, basename='contacts')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
