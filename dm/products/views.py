@@ -42,7 +42,7 @@ from profiles.serializers import ProfileSerializer
 from core.utils import create_token
 
 
-class CoreViewSet(viewsets.ModelViewSet):
+class CoreViewSet(viewsets.ViewSet):
     def destroy(self, request, pk=None):
         pass
 
