@@ -64,3 +64,12 @@ class Profile(CoreModel):
 
     def __str__(self):
         return 'Profile {}'.format(self.nickname)
+
+
+class Contact(CoreModel):
+    phone = models.CharField(max_length=12)
+    shop = models.ForeignKey('products.Shop', on_delete=models.SET_NULL, null=True, related_name='contacts')
+    profile = models.ForeignKey('profiles.Profile', on_delete=models.SET_NULL, null=True, related_name='contacts')
+
+    def __str__(self):
+        return self.phone
