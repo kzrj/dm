@@ -87,19 +87,6 @@ class ShopDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CreateShopAndProductSerializer(serializers.Serializer):
-    shop_name = serializers.CharField()
-    shop_phone = serializers.CharField()
-    shop_add_info = serializers.CharField(required=False)
-    shop_delivery = serializers.CharField()
-
-    product_name = serializers.CharField()
-    product_category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
-    product_price = serializers.CharField()
-    product_add_info = serializers.CharField()
-    product_image = serializers.FileField()
-
-
 class CreateShopSerializer(serializers.Serializer):
     name = serializers.CharField()
     phone = serializers.CharField()
