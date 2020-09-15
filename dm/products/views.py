@@ -69,7 +69,7 @@ class ShopViewSet(viewsets.ModelViewSet):
             return CreateShopSerializer
         if self.action == 'partial_update':
             return UpdateShopSerializer
-        return ShopSerializer
+        return self.serializer_class
 
     def list(self, request):
         category_name = request.GET.get('category', None)
