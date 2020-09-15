@@ -27,7 +27,7 @@ def create_test_dm_shops():
     shops = list()
 
     for title in titles:
-        shops.append(Shop(name=title, description=f'description of {title}', delivery='delivery dm'))
+        shops.append(Shop(name=title, phone='123', description=f'description of {title}', delivery='delivery dm'))
 
     Shop.objects.bulk_create(shops)
 

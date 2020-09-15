@@ -25,33 +25,8 @@ class Category(CoreModel):
 
 
 class ShopQuerySet(models.QuerySet):
-    def create_shop_with_product(self, **kwargs):
-        shop = self.create(
-            name=kwargs['shop_name'],
-            description=kwargs.get('shop_add_info', None),
-            delivery=kwargs.get('shop_delivery', None),
-            )
-        shop.contacts.create(phone=kwargs['shop_phone'], shop=shop)
-
-        shop.products.create_product(
-            title=kwargs['product_name'],
-            category=kwargs['product_category'],
-            price=kwargs['product_price'],
-            shop=shop,
-            description=kwargs.get('product_add_info', None),
-            image=kwargs.get('product_image', None),
-            )
-
-        if kwargs.get('user', None):
-            profile = kwargs['user'].profile
-            profile.shop = shop
-            profile.save()
-
-        return shop
-
     def create_shop(self, name, phone, profile, delivery=None, description=None):
-        shop = self.create(name=name, description=description, delivery=delivery)
-        shop.contacts.create(phone=phone, shop=shop)
+        shop = self.create(name=name, phone=phone, description=description, delivery=delivery)
         profile.shop = shop
         profile.save()
 
@@ -86,6 +61,7 @@ class ShopQuerySet(models.QuerySet):
 
 class Shop(CoreModel):
     name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
     description = models.TextField(null=True)
     delivery = models.CharField(max_length=100, null=True, blank=True)
 

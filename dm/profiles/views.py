@@ -8,11 +8,3 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
 from products.views import CoreViewSet
-from profiles.models import Contact
-from profiles.serializers import ContactSerializer
-
-
-class ContactViewSet(CoreViewSet, viewsets.ModelViewSet):
-    queryset = Contact.objects.all()
-    serializer_class = ContactSerializer
-    # permission_classes = [ObjAndOwnerPermissions]

@@ -49,35 +49,35 @@ class ShopTest(TransactionTestCase):
             bool(shops)
             self.assertEqual(hasattr(shops[0], 'category_products'), True)
 
-    @tag('with_file')
-    def test_create_shop_with_product(self):
-        category = Category.objects.all().first()
-        image = open('../data/polufabrikati.jpg', 'rb')
+    # @tag('with_file')
+    # def test_create_shop_with_product(self):
+    #     category = Category.objects.all().first()
+    #     image = open('../data/polufabrikati.jpg', 'rb')
 
-        data = {
-            'shop_name': 'Test shop',
-            'shop_phone': '79148569874',
-            'shop_add_info': None,
-            'shop_delivery': None,
+    #     data = {
+    #         'shop_name': 'Test shop',
+    #         'shop_phone': '79148569874',
+    #         'shop_add_info': None,
+    #         'shop_delivery': None,
 
-            'product_name': 'test product',
-            'product_category': category,
-            'product_price': '100 za shtuku',
-            'product_add_info': None,
-            'product_image': image
-        }
+    #         'product_name': 'test product',
+    #         'product_category': category,
+    #         'product_price': '100 za shtuku',
+    #         'product_add_info': None,
+    #         'product_image': image
+    #     }
 
-        shop = Shop.objects.create_shop_with_product(**data)
-        self.assertEqual(shop.name, data['shop_name'])
-        self.assertEqual(shop.phones.all().first().phone, data['shop_phone'])
+    #     shop = Shop.objects.create_shop_with_product(**data)
+    #     self.assertEqual(shop.name, data['shop_name'])
+    #     self.assertEqual(shop.phones.all().first().phone, data['shop_phone'])
 
-        product = shop.products.all().first()
-        self.assertEqual(product.title, data['product_name'])
-        self.assertEqual(product.category, data['product_category'])
-        self.assertEqual(product.price, data['product_price'])
+    #     product = shop.products.all().first()
+    #     self.assertEqual(product.title, data['product_name'])
+    #     self.assertEqual(product.category, data['product_category'])
+    #     self.assertEqual(product.price, data['product_price'])
 
-        image = product.images.all().first()
-        self.assertEqual(image.catalog_image.name, f'catalog_{product.pk}.jpg')
+    #     image = product.images.all().first()
+    #     self.assertEqual(image.catalog_image.name, f'catalog_{product.pk}.jpg')
 
     def test_create_shop(self):
         profile = Profile.objects.get(username='kzr')
@@ -85,7 +85,7 @@ class ShopTest(TransactionTestCase):
             delivery='delivery', description='description')
         self.assertEqual(shop.name, 'test shop')
         self.assertEqual(shop.description, 'description')
-        self.assertEqual(shop.phones.all().first(), '123')
+        self.assertEqual(shop.phone, '123')
 
         profile.refresh_from_db()
         self.assertEqual(profile.shop, shop)
