@@ -117,6 +117,9 @@ class ShopViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def destroy(self, request, pk=None):
+        pass
+
 
 class InitTestDataView(APIView):
     def get(self, request, format=None):
