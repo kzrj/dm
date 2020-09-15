@@ -106,3 +106,9 @@ class CreateShopSerializer(serializers.Serializer):
     delivery = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
     profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
+
+
+class UpdateShopSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    delivery = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)

@@ -32,7 +32,7 @@ from viberbot.api.viber_requests import (
 
 from products.serializers import ProductSerializer, CategorySerializer, \
     ShopSerializer, ShopWithProductsSerializer, ShopDetailSerializer, CreateShopAndProductSerializer, \
-    CreateShopSerializer
+    CreateShopSerializer, UpdateShopSerializer
 from products.models import Product, Category, Shop
 from products.testing_utils import create_test_dm_products
 from products.filters import ShopFilter
@@ -43,15 +43,6 @@ from core.utils import create_token
 
 
 class CoreViewSet(viewsets.ModelViewSet):
-    def create(self, request):
-        pass
-
-    def update(self, request, pk=None):
-        pass
-
-    def partial_update(self, request, pk=None):
-        pass
-
     def destroy(self, request, pk=None):
         pass
 
@@ -77,7 +68,7 @@ class ShopViewSet(CoreViewSet, viewsets.ModelViewSet):
         if self.action == 'create':
             return CreateShopSerializer
         if self.action == 'partial_update':
-            return JobUpdateSerializer
+            return UpdateShopSerializer
         return ShopSerializer
 
     def list(self, request):
