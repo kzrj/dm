@@ -117,6 +117,9 @@ class ShopViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def update(request, *args, **kwargs):
+        return ShopViewSet.update(request, *args, **kwargs)
+
     def destroy(self, request, pk=None):
         pass
 
