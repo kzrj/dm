@@ -59,7 +59,8 @@ def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
         'profile': ProfileSerializer(user.profile).data,
-        'shop': ShopDetailSerializer(user.profile.shop).data
+        'shop': ShopDetailSerializer(user.profile.shop).data,
+        # 'categories': ShopDetailSerializer(user.profile.shop).data,
     }
 
 
