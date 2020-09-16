@@ -70,6 +70,7 @@ class ProductViewSet(viewsets.ModelViewSet):
                 title=serializer.validated_data['title'],
                 price=serializer.validated_data['price'],
                 description=serializer.validated_data['description'],
+                category=serializer.validated_data['category'],
                 shop=request.user.profile.shop
             )
             return Response(ProductSerializer(product).data, status=status.HTTP_200_OK)
