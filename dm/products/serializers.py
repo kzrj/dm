@@ -54,19 +54,23 @@ class ProductMiniSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['images', 'title', 'price']
+        fields = ['images', 'title', 'price', 'active']
 
 
 class CreateProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['title', 'price', 'description', 'category']
+        fields = ['title', 'price', 'description', 'category', 'id', 'active']
 
 
 class UpdateProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['title', 'price', 'description', 'category', 'id']
+        fields = ['title', 'price', 'description', 'category', 'id', 'active']
+
+
+class ActivateDeactivateProductSerializer(serializers.Serializer):
+    active = serializers.BooleanField()
 
 
 class CategorySerializer(serializers.ModelSerializer):
