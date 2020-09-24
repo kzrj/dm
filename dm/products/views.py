@@ -78,6 +78,11 @@ class ProductViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def destroy(self, *args, **kwargs):
+        serializer = self.get_serializer(self.get_object())
+        super().destroy(*args, **kwargs)
+        return response.Response(serializer.data, status=status.HTTP_200_OK)
+
     # @action(methods=['post'], detail=True, serializer_class=ActivateDeactivateProductSerializer)
     # def activate_deactivate(self, request, pk=None):
     #     serializer = ActivateDeactivateProductSerializer(data=request.data)
