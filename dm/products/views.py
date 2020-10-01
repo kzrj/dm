@@ -93,6 +93,7 @@ class ProductViewSet(viewsets.ModelViewSet):
                 image_file=serializer.validated_data['original'],
                 product=product
             )
+            product.refresh_from_db()
             
             return Response(
                 {
@@ -110,6 +111,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             product = self.get_object()
             image = serializer.validated_data['image']
             image.delete()
+            product.refresh_from_db()
             
             return Response(
                 {
