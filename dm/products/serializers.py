@@ -40,6 +40,16 @@ class ProductImageThumbSerializer(serializers.ModelSerializer):
         fields = ['thumb_image']
 
 
+class ProductImageCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductImage
+        fields = ['original']
+
+
+class ProductImageIdSerializer(serializers.Serializer):
+    image = serializers.PrimaryKeyRelatedField(queryset=ProductImage.objects.all())
+
+
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.ReadOnlyField(source='category.name')
     images = ProductImageSerializer(many=True)

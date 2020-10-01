@@ -83,55 +83,41 @@ class ProductViewSet(viewsets.ModelViewSet):
         super().destroy(*args, **kwargs)
         return response.Response(serializer.data, status=status.HTTP_200_OK)
 
-    # @action(methods=['post'], detail=True, serializer_class=ActivateDeactivateProductSerializer)
-    # def activate_deactivate(self, request, pk=None):
-    #     serializer = ActivateDeactivateProductSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         product = self.get_object()
-    #         product.active = serializer.validated_data['active']
-    #         product.save()
-    #         return Response(
-    #             {
-    #                 "message": "Продукт активен" 
-    #                 	if serializer.validated_data['active'] else "Продукт неактивен"
-    #             },
-    #             status=status.HTTP_200_OK)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    # @action(methods=['post'], detail=True, serializer_class=JobImageCreateSerializer)
-    # def add_image(self, request, pk=None):
-    #     serializer = JobImageCreateSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         job = self.get_object()
-    #         job.images.create_job_image(image_file=serializer.validated_data['original'], job=job)
+    @action(methods=['post'], detail=True, serializer_class=ProductImageCreateSerializer)
+    def add_image(self, request, pk=None):
+        serializer = ProductImageCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            product = self.get_object()
+            product.images.create_product_image(
+                image_file=serializer.validated_data['original'],
+                product=product
+            )
             
-    #         return Response(
-    #             {
-    #                 "job": JobSerializer(job).data,
-    #                 "message": "Изображение добавлено."
-    #             },
-    #             status=status.HTTP_200_OK)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "product": ProductSerializer(product).data,
+                    "message": "Изображение добавлено."
+                },
+                status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # @action(methods=['post'], detail=True, serializer_class=JobImageIdSerializer)
-    # def delete_image(self, request, pk=None):
-    #     serializer = JobImageIdSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         job = self.get_object()
-    #         image = serializer.validated_data['image']
-    #         image.delete()
+    @action(methods=['post'], detail=True, serializer_class=ProductImageIdSerializer)
+    def delete_image(self, request, pk=None):
+        serializer = ProductImageIdSerializer(data=request.data)
+        if serializer.is_valid():
+            product = self.get_object()
+            image = serializer.validated_data['image']
+            image.delete()
             
-    #         return Response(
-    #             {
-    #                 "job": JobSerializer(job).data,
-    #                 "message": "Изображение удалено."
-    #             },
-    #             status=status.HTTP_200_OK)
-    #     else:
-    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "product": ProductSerializer(product).data,
+                    "message": "Изображение удалено."
+                },
+                status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ShopViewSet(viewsets.ModelViewSet):
