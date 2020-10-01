@@ -33,7 +33,8 @@ from viberbot.api.viber_requests import (
 from products.serializers import ProductSerializer, CategorySerializer, \
     ShopSerializer, ShopWithProductsSerializer, ShopDetailSerializer,  \
     CreateShopSerializer, UpdateShopSerializer, CreateProductSerializer, \
-    UpdateProductSerializer, ActivateDeactivateProductSerializer
+    UpdateProductSerializer, ActivateDeactivateProductSerializer, \
+    ProductImageCreateSerializer, ProductImageIdSerializer
 from products.models import Product, Category, Shop
 from products.testing_utils import create_test_dm_products
 from products.filters import ShopFilter
