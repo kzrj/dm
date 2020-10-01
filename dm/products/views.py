@@ -82,7 +82,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     def destroy(self, *args, **kwargs):
         serializer = self.get_serializer(self.get_object())
         super().destroy(*args, **kwargs)
-        return response.Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(methods=['post'], detail=True, serializer_class=ProductImageCreateSerializer)
     def add_image(self, request, pk=None):
