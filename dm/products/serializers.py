@@ -29,7 +29,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductImage
-        fields = ['catalog_image', 'thumb_image']
+        fields = ['catalog_image', 'thumb_image', 'id']
 
 
 class ProductImageThumbSerializer(serializers.ModelSerializer):
