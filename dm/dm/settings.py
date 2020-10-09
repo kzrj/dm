@@ -44,7 +44,7 @@ DJANGO_APPS = [
 OWN_APPS = [
     'products.apps.ProductsConfig',
     'profiles.apps.ProfilesConfig',
-    'feedback.apps.FeedbackConfig',
+    'feedbacks.apps.FeedbacksConfig',
 ]
 
 
