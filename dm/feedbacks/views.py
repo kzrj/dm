@@ -8,6 +8,6 @@ from feedbacks.models import Feedback, Like
 from feedbacks.serializers import FeedbackSerializer
 
 
-class FeedbackViewSet(CoreViewSet, viewsets.ModelViewSet):
+class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
