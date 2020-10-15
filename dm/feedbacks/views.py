@@ -19,8 +19,8 @@ class FeedbackViewSet(viewsets.ModelViewSet):
             feedback = Feedback.objects.create_feedback(
                 profile=profile,
                 text=serializer.validated_data['text'],
-                shop=serializer.validated_data['shop'],
-                rel_feedback=serializer.validated_data['rel_feedback'],
+                shop=serializer.validated_data.get('shop', None),
+                rel_feedback=serializer.validated_data.get('rel_feedback', None),
                 )
             return Response(
                 {
