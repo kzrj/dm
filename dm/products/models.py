@@ -90,6 +90,10 @@ class Shop(CoreModel):
     @property
     def likes_list(self):
         return list(self.likes.profile_ids())
+
+    @property
+    def feedbacks_list(self):
+        return list(self.feedbacks.profile_ids())
             
 
 class ProductQuerySet(models.QuerySet):

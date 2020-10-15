@@ -124,7 +124,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ShopViewSet(viewsets.ModelViewSet):
-    queryset = Shop.objects.all().prefetch_related('likes') 
+    queryset = Shop.objects.all().prefetch_related('likes', 'feedbacks') 
     serializer_class = ShopSerializer
     filter_class = ShopFilter
 

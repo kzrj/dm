@@ -10,6 +10,9 @@ class FeedbackManager(CoreModelManager):
     def create_feedback(self, profile, text, shop=None, rel_feedback=None):
         return self.create(profile=profile, text=text, shop=shop, rel_feedback=rel_feedback)
 
+    def profile_ids(self):
+        return self.filter(like=True).values_list('profile__pk', flat=True)
+
 
 class Feedback(CoreModel):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="feedbacks")
@@ -40,16 +43,16 @@ class LikeManager(CoreModelManager):
         return self.create(profile=profile, like=like, shop=shop, feedback=feedback)
 
     def set_like_unlike(self, profile, shop=None, feedback=None):
-    	like = self.filter(profile=profile, shop=shop, feedback=feedback).first()
-    	if like:
-    		like.like = not like.like
-    		like.save()
-    		return like
-    	else:
-    		return self.create_like(profile=profile, shop=shop, feedback=feedback, like=True)
+        like = self.filter(profile=profile, shop=shop, feedback=feedback).first()
+        if like:
+            like.like = not like.like
+            like.save()
+            return like
+        else:
+            return self.create_like(profile=profile, shop=shop, feedback=feedback, like=True)
 
     def profile_ids(self):
-    	return self.filter(like=True).values_list('profile__pk', flat=True)
+        return self.filter(like=True).values_list('profile__pk', flat=True)
 
 
 class Like(CoreModel):
