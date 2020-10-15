@@ -11,7 +11,7 @@ class FeedbackManager(CoreModelManager):
         return self.create(profile=profile, text=text, shop=shop, rel_feedback=rel_feedback)
 
     def profile_ids(self):
-        return self.filter(like=True).values_list('profile__pk', flat=True)
+        return self.filter(active=True).values_list('profile__pk', flat=True)
 
 
 class Feedback(CoreModel):
