@@ -87,6 +87,10 @@ class Shop(CoreModel):
         return list(set(self.products.all().select_related('category') \
                 .values_list('category__name', 'category__ru_name')))
 
+    @property
+    def likes_list(self):
+        return list(self.likes.profile_ids())
+            
 
 class ProductQuerySet(models.QuerySet):
     pass

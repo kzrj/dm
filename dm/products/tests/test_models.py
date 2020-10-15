@@ -3,10 +3,11 @@ from django.test import TransactionTestCase, tag
 
 from products.models import Shop, Category, Product, ProductImage
 from profiles.models import Profile
+from feedbacks.models import Feedback, Like
 
 import products.testing_utils as product_testing
 from products.utils import create_resized_image_from_file
-from products.serializers import ShopDetailSerializer
+from products.serializers import ShopDetailSerializer, ShopWithProductsSerializer
 
 
 class ShopTest(TransactionTestCase):
@@ -101,9 +102,17 @@ class ImageCreationTest(TransactionTestCase):
 class SerializersTest(TransactionTestCase):
     def setUp(self):
         product_testing.create_test_dm_products(images_onOff=False)
+        self.profile = Profile.objects.get(user__username='kzr')
+        self.shop = Shop.objects.all().first()
 
     def test_shop_detail_serializer(self):
-        # print()
+        like = Like.objects.set_like_unlike(profile=self.profile, shop=self.shop)
+
         with self.assertNumQueries(4):
-            shop = Shop.objects.all().first()
-            bool(ShopDetailSerializer(shop).data)
+            bool(ShopDetailSerializer(self.shop).data)
+
+    # def test_shop_with_product_serializer(self):
+    #     like = Like.objects.set_like_unlike(profile=self.profile, shop=self.shop)
+
+    #     with self.assertNumQueries(4):
+    #         bool(ShopWithProductsSerializer(self.shop).data)

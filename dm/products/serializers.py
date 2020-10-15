@@ -90,6 +90,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ShopSerializer(serializers.ModelSerializer):
+    likes_list = serializers.ReadOnlyField()
+
     class Meta:
         model = Shop
         fields = '__all__'
@@ -98,6 +100,7 @@ class ShopSerializer(serializers.ModelSerializer):
 class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
     category_products = ProductMiniSerializer(many=True)
     category_images = serializers.ReadOnlyField()
+    likes_list = serializers.ReadOnlyField()
 
     class Meta:
         model = Shop
@@ -107,6 +110,7 @@ class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.Mode
 class ShopDetailSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True)
     categories = serializers.ReadOnlyField()
+    likes_list = serializers.ReadOnlyField()
 
     class Meta:
         model = Shop

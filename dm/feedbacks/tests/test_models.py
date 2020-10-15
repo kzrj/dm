@@ -44,4 +44,19 @@ class FeedbackAndLikesTest(TransactionTestCase):
         with self.assertRaises(Exception):
             like4 = Like.objects.create_like(profile=self.profile, feedback=feedback)
 
-        
+    def test_set_like_unlike(self):
+        like = Like.objects.set_like_unlike(profile=self.profile, shop=self.shop)
+        self.assertEqual(like.like, True)
+
+        like = Like.objects.set_like_unlike(profile=self.profile, shop=self.shop)
+        self.assertEqual(like.like, False)
+        self.assertEqual(Like.objects.all().count(), 1)
+
+        like = Like.objects.set_like_unlike(profile=self.profile, shop=self.shop)
+        self.assertEqual(like.like, True)
+        self.assertEqual(Like.objects.all().count(), 1)
+
+    def test_profile_ids(self):
+        like = Like.objects.set_like_unlike(profile=self.profile, shop=self.shop)
+        profile_ids = Like.objects.profile_ids()
+        self.assertEqual(profile_ids[0], self.profile.pk)

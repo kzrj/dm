@@ -144,7 +144,8 @@ class ShopViewSet(viewsets.ModelViewSet):
             queryset = self.filter_queryset(
                 self.queryset \
                     .add_products_count_by_dm_cat() \
-                    .add_category_products(category_name=category_name))
+                    .add_category_products(category_name=category_name) \
+                    .select_related('likes'))
             serializer = ShopWithProductsSerializer(queryset, many=True)
 
             page = self.paginate_queryset(queryset)
@@ -185,6 +186,21 @@ class ShopViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, pk=None):
         pass
+
+    @action(methods=['post'], detail=True)
+    def like(self, request, pk=None):
+        serializer = SetLikeSerializer(data=request.data)
+        if serializer.is_valid():
+            shop = self.get_object()
+            shop.likes.set_like_unlike(profile=request.user.profile, shop=shop)
+            return Response(
+                {
+                    "message": "Liked or Unliked",
+                    "likes_list": shop.likes_list
+                },
+                status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class InitTestDataView(APIView):
