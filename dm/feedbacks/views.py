@@ -5,15 +5,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from feedbacks.models import Feedback, Like
-from feedbacks.serializers import FeedbackSerializer
+from feedbacks.serializers import FeedbackSerializer, FeedbackEditSerializer
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
 
-    def create(self, request):
-        serializer = FeedbackSerializer(data=request.data)
+    def create(self, request, serializer_class=FeedbackEditSerializer):
+        serializer = FeedbackEditSerializer(data=request.data)
         if serializer.is_valid():
             profile = request.user.profile
             feedback = Feedback.objects.create_feedback(
