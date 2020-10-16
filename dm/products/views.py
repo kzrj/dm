@@ -188,18 +188,14 @@ class ShopViewSet(viewsets.ModelViewSet):
 
     @action(methods=['post'], detail=True)
     def like(self, request, pk=None):
-        serializer = SetLikeSerializer(data=request.data)
-        if serializer.is_valid():
-            shop = self.get_object()
-            shop.likes.set_like_unlike(profile=request.user.profile, shop=shop)
-            return Response(
-                {
-                    "message": "Liked or Unliked",
-                    "likes_list": shop.likes_list
-                },
-                status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        shop = self.get_object()
+        shop.likes.set_like_unlike(profile=request.user.profile, shop=shop)
+        return Response(
+            {
+                "message": "Liked or Unliked",
+                "likes_list": shop.likes_list
+            },
+            status=status.HTTP_200_OK)
 
 
 class InitTestDataView(APIView):
