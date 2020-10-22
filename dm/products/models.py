@@ -84,8 +84,9 @@ class Shop(CoreModel):
 
     @property
     def categories(self):
-        return list(set(self.products.all().select_related('category') \
-                .values_list('category__name', 'category__ru_name')))
+        # return list(set(self.products.all().select_related('category') \
+        #         .values_list('category__name', 'category__ru_name')))
+        return self.products.all().select_related('category').values('category').distinct()
 
     @property
     def likes_list(self):
