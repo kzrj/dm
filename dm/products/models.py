@@ -86,7 +86,7 @@ class Shop(CoreModel):
     def categories(self):
         # return list(set(self.products.all().select_related('category') \
         #         .values_list('category__name', 'category__ru_name')))
-        return self.products.all().select_related('category').values('category').distinct()
+        return self.products.categories_distinct()
 
     @property
     def likes_list(self):
@@ -114,6 +114,10 @@ class ProductManager(CoreModelManager):
             product.images.create_product_image(image_file=image, product=product)
 
         return product
+
+    def categories_distinct(self):
+        cat_ids = self.select_related('category').values_list('category__pk', flat=True) 
+        return Category.objects.filter(pk__in=cat_ids)
 
 
 class Product(CoreModel):
