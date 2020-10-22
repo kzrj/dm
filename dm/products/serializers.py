@@ -84,6 +84,8 @@ class ActivateDeactivateProductSerializer(serializers.Serializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(many=True)
+    
     class Meta:
         model = Category
         fields = '__all__'
