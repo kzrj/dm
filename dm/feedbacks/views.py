@@ -6,11 +6,13 @@ from rest_framework.decorators import action
 
 from feedbacks.models import Feedback, Like
 from feedbacks.serializers import FeedbackSerializer, FeedbackEditSerializer
+from feedbacks.filters import FeedbackFilter
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+    filter_class = FeedbackFilter
 
     def create(self, request, serializer_class=FeedbackEditSerializer):
         serializer = FeedbackEditSerializer(data=request.data)

@@ -101,6 +101,7 @@ class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.Mode
     category_products = ProductMiniSerializer(many=True)
     category_images = serializers.ReadOnlyField()
     likes_list = serializers.ReadOnlyField()
+    feedbacks_list = serializers.ReadOnlyField()
 
     class Meta:
         model = Shop
