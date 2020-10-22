@@ -112,7 +112,6 @@ class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.Mode
 
 class ShopDetailSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True)
-    # categories = serializers.ReadOnlyField()
     categories = CategorySerializer(read_only=True, many=True)
     likes_list = serializers.ReadOnlyField()
     feedbacks_list = serializers.ReadOnlyField()

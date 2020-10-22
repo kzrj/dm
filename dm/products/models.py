@@ -78,14 +78,12 @@ class Shop(CoreModel):
         
         for product in self.category_products:
             if product.images.all().first():
-                images.append(product.images.all().first().thumb_image.url)
+                images.append(product.images.all().first().catalog_image.url)
 
         return images[:2]
 
     @property
     def categories(self):
-        # return list(set(self.products.all().select_related('category') \
-        #         .values_list('category__name', 'category__ru_name')))
         return self.products.categories_distinct()
 
     @property
