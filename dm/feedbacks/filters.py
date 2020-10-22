@@ -7,5 +7,5 @@ from feedbacks.models import Feedback
 
 class FeedbackFilter(filters.FilterSet):
     class Meta:
-        model = Shop
+        model = Feedback
         fields = '__all__'
