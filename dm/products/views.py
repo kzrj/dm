@@ -201,7 +201,9 @@ class ShopViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True)
     def viber_link(self, request, pk=None):
         shop = self.get_object()
-        context = {'shop': shop, 'image': shop.category_images[0]}
+        product = shop.products.all().first()
+
+        context = {'shop': shop, 'image': product.images.all().first().catalog_image}
         return render(request, 'shop_detail.html', context)
 
 
