@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.shortcuts import render
 
 from viberbot import Api
 from viberbot.api.bot_configuration import BotConfiguration
@@ -196,6 +197,12 @@ class ShopViewSet(viewsets.ModelViewSet):
                 "likes_list": shop.likes_list
             },
             status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=True)
+    def viber_link(self, request, pk=None):
+        shop = self.get_object()
+        context = {'shop': shop}
+    	return render(request, 'shop_detail.html', context)
 
 
 class InitTestDataView(APIView):
