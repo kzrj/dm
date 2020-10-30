@@ -202,7 +202,7 @@ class ShopViewSet(viewsets.ModelViewSet):
     def viber_link(self, request, pk=None):
         shop = self.get_object()
         context = {'shop': shop}
-    	return render(request, 'shop_detail.html', context)
+        return render(request, 'shop_detail.html', context)
 
 
 class InitTestDataView(APIView):
