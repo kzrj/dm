@@ -203,7 +203,7 @@ class ShopViewSet(viewsets.ModelViewSet):
         shop = self.get_object()
         product = shop.products.all().first()
 
-        context = {'shop': shop, 'image': product.images.all().first().catalog_image}
+        context = {'shop': shop, 'image': product.images.all().first().catalog_image.url}
         return render(request, 'shop_detail.html', context)
 
 
