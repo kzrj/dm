@@ -26,17 +26,17 @@ services:
     build: .
     depends_on:
       - db
-    # command: bash -c "cd dm &&
-    #                   python manage.py migrate &&
-    #                   python manage.py makemigrations --no-input &&
-    #                   python manage.py test products.tests.test_models.SerializersTest"
-
-    restart: unless-stopped
-    command: bash -c "cd dm && 
-                      python manage.py makemigrations --no-input &&
+    command: bash -c "cd dm &&
                       python manage.py migrate &&
-                      python manage.py collectstatic --no-input &&
-                      gunicorn dm.wsgi -b 0.0.0.0:8000"
+                      python manage.py makemigrations --no-input &&
+                      python manage.py test products.tests.test_views.ShopViewSetTest.test_viber_link"
+
+    # restart: unless-stopped
+    # command: bash -c "cd dm && 
+    #                   python manage.py makemigrations --no-input &&
+    #                   python manage.py migrate &&
+    #                   python manage.py collectstatic --no-input &&
+    #                   gunicorn dm.wsgi -b 0.0.0.0:8000"
    
     volumes:
       - .:/code

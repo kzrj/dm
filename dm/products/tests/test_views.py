@@ -5,6 +5,7 @@ from rest_framework.test import APITestCase
 
 from products.models import Shop, Category, Product, ProductImage
 from feedbacks.models import Feedback, Like
+from profiles.models import Profile
 import products.testing_utils as product_testing
 from products.serializers import ShopDetailSerializer
 
@@ -22,3 +23,7 @@ class ShopViewSetTest(APITestCase):
 
         response = self.client.get('/api/shops/')
         self.assertEqual(response.data['results'][0].get('category_products', False), False)
+
+    def test_viber_link(self):
+        response = self.client.get(f'/api/shops/{self.shop.pk}/viber_link/')
+        print(response.content)

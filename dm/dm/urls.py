@@ -24,7 +24,7 @@ router.register(r'feedbacks', FeedbackViewSet, basename='feedbacks')
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
-    url(r'^api/init_data/$', InitTestDataView.as_view()),
+    # url(r'^api/init_data/$', InitTestDataView.as_view()),
     url(r'^api/jwt/api-token-auth/', obtain_jwt_token),
     url(r'^api/jwt/api-token-refresh/', refresh_jwt_token),
     url(r'^api/jwt/api-token-verify/', verify_jwt_token),
