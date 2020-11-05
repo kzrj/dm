@@ -2,19 +2,19 @@ version: '3'
 
 services:
     
-  nginx:
-    image: nginx:latest
-    restart: unless-stopped
-    ports:
-      - "80:8080"
-      # - "5432"
-      # - "443:443"
-    volumes:
-      - .:/code
-      - ./nginx:/etc/nginx/conf.d
-      - ./frontend:/var/www/frontend
-    depends_on:
-      - backend
+  # nginx:
+  #   image: nginx:latest
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:8080"
+  #     # - "5432"
+  #     # - "443:443"
+  #   volumes:
+  #     - .:/code
+  #     - ./nginx:/etc/nginx/conf.d
+  #     - ./frontend:/var/www/frontend
+  #   depends_on:
+  #     - backend
       
   db:
     restart: unless-stopped
@@ -26,19 +26,19 @@ services:
     build: .
     depends_on:
       - db
-    # command: bash -c "cd dm &&
-    #                   python manage.py migrate &&
-    #                   python manage.py makemigrations --no-input &&
-    #                   python manage.py test products.tests.test_views.ShopViewSetTest.test_viber_link"
-
-    restart: unless-stopped
-    command: bash -c "cd dm && 
-                      python manage.py makemigrations --no-input &&
+    command: bash -c "cd dm &&
                       python manage.py migrate &&
-                      python manage.py collectstatic --no-input &&
-                      gunicorn dm.wsgi -b 0.0.0.0:8000"
+                      python manage.py makemigrations --no-input &&
+                      python manage.py test core.tests.test_views.CoreViewSetTest.test_index_category"
+
+    # restart: unless-stopped
+    # command: bash -c "cd dm && 
+    #                   python manage.py makemigrations --no-input &&
+    #                   python manage.py migrate &&
+    #                   python manage.py collectstatic --no-input &&
+    #                   gunicorn dm.wsgi -b 0.0.0.0:8000"
    
     volumes:
       - .:/code
     ports:
-      - "8000"
+      - "80:8000"
