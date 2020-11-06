@@ -23,7 +23,7 @@ class MainPageCategoryView(generic.TemplateView):
             # add category
             context['og_title'] = shop.name
             context['og_description'] = shop.description
-            image = shop.product.images.all().first()
+            image = shop.products.images.all().first()
             if image:
                 context['og_image'] = image.catalog_image.url
 
