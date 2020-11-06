@@ -39,4 +39,4 @@ urlpatterns = [
     # url(r'^(?:.*)/?$', IndexView.as_view()),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
-+ static('/media/', document_root=os.path.join(settings.BASE_DIR, '../media'))
++ static(settings.MEDIA_URL, document_root=os.path.join(settings.BASE_DIR, '../media'))
