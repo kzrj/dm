@@ -24,8 +24,8 @@ class AnnotateFieldsModelSerializer(serializers.ModelSerializer):
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
-    catalog_image = serializers.ReadOnlyField(required=False, source='catalog_image.url')
-    thumb_image = serializers.ReadOnlyField(required=False, source='thumb_image.url')
+    catalog_image = serializers.ReadOnlyField(source='catalog_image.url')
+    thumb_image = serializers.ReadOnlyField(source='thumb_image.url')
 
     class Meta:
         model = ProductImage
@@ -101,7 +101,7 @@ class ShopSerializer(serializers.ModelSerializer):
 
 class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
     category_products = ProductMiniSerializer(many=True)
-    category_images = serializers.ReadOnlyField()
+    category_images = serializers.ReadOnlyField(required=False, default=None)
     likes_list = serializers.ReadOnlyField()
     feedbacks_list = serializers.ReadOnlyField()
 
