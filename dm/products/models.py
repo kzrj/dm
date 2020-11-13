@@ -148,7 +148,6 @@ class ProductImageManager(CoreModelManager):
         product_image = self.create(product=product)
         # name = image_file.name.split('/')[-1]
         product_pk = product.pk if product else 0
-        product_image.original.save(f'{product.pk}.jpg', image_file)
 
         catalog_image_name = f'catalog_{product_image.original.name}'
         catalog_image = create_resized_image_from_file(image_file, 480)
@@ -157,6 +156,8 @@ class ProductImageManager(CoreModelManager):
         thumb_image_name = f'thumb_{product_image.original.name}'
         thumb_image = create_resized_image_from_file(image_file, 48)
         product_image.thumb_image.save(thumb_image_name, thumb_image)
+
+        product_image.original.save(f'{product.pk}.jpg', image_file)
 
         return product_image
 
