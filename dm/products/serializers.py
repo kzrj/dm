@@ -130,6 +130,8 @@ class CreateShopSerializer(serializers.Serializer):
 
 
 class UpdateShopSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(read_only=True, many=True)
+    
     class Meta:
         model = Shop
         fields = ['id', 'name', 'delivery', 'description', 'phone']
