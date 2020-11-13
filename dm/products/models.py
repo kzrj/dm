@@ -145,8 +145,6 @@ class ProductImageManager(CoreModelManager):
         return ProductImageQuerySet(self.model, using=self._db)
 
     def create_product_image(self, image_file, product=None):
-        product_pk = product.pk if product else 0
-
         catalog_image_name = f'catalog_{product_image.original.name}'
         catalog_image = create_resized_image_from_file(image_file, 480)
 
@@ -154,6 +152,7 @@ class ProductImageManager(CoreModelManager):
         thumb_image = create_resized_image_from_file(image_file, 48)
 
         product_image = self.create(product=product)
+        product_pk = product.pk if product else 0
         product_image.catalog_image.save(catalog_image_name, catalog_image)
         product_image.thumb_image.save(thumb_image_name, thumb_image)
         product_image.original.save(f'{product.pk}.jpg', image_file)
