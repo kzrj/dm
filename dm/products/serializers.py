@@ -74,9 +74,11 @@ class CreateProductSerializer(serializers.ModelSerializer):
 
 
 class UpdateProductSerializer(serializers.ModelSerializer):
+    images = ProductImageSerializer(read_only=True, many=True)
+
     class Meta:
         model = Product
-        fields = ['title', 'price', 'description', 'category', 'id', 'active']
+        fields = ['title', 'price', 'description', 'category', 'id', 'active', 'images']
 
 
 class ActivateDeactivateProductSerializer(serializers.Serializer):
@@ -130,8 +132,6 @@ class CreateShopSerializer(serializers.Serializer):
 
 
 class UpdateShopSerializer(serializers.ModelSerializer):
-    images = ProductImageSerializer(read_only=True, many=True)
-    
     class Meta:
         model = Shop
         fields = ['id', 'name', 'delivery', 'description', 'phone']
