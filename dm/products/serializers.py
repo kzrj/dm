@@ -101,7 +101,7 @@ class ShopSerializer(serializers.ModelSerializer):
 
 class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
     category_products = ProductMiniSerializer(many=True)
-    # category_images = serializers.ReadOnlyField()
+    category_images = serializers.ReadOnlyField()
     likes_list = serializers.ReadOnlyField()
     feedbacks_list = serializers.ReadOnlyField()
 

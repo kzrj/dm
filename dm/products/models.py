@@ -74,7 +74,7 @@ class Shop(CoreModel):
     def category_images(self):
         images = []
         if not hasattr(self, 'category_products'):
-            return images
+            return None
         
         for product in self.category_products:
             if product.images.all().first():
