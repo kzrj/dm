@@ -52,7 +52,7 @@ class LikeManager(CoreModelManager):
             return self.create_like(profile=profile, shop=shop, feedback=feedback, like=True)
 
     def profile_ids(self):
-        return self.select_related('profile').filter(like=True).values_list('profile__pk', flat=True)
+        return self.filter(like=True).values_list('profile__pk', flat=True)
 
 
 class Like(CoreModel):
