@@ -194,7 +194,7 @@ class ShopViewSet(viewsets.ModelViewSet):
         return Response(
             {
                 "message": "Liked or Unliked",
-                "likes_list": shop.likes_list
+                # "likes_list": shop.likes_list
             },
             status=status.HTTP_200_OK)
 
