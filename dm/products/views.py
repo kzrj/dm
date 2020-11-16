@@ -190,7 +190,7 @@ class ShopViewSet(viewsets.ModelViewSet):
     @action(methods=['post'], detail=True)
     def like(self, request, pk=None):
         shop = self.get_object()
-        shop.likes.set_like_unlike(profile=request.user.profile, shop=shop)
+        # shop.likes.set_like_unlike(profile=request.user.profile, shop=shop)
         return Response(
             {
                 "message": "Liked or Unliked",
