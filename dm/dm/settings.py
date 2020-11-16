@@ -124,6 +124,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     # 'EXCEPTION_HANDLER': 'core.utils.custom_exception_handler',
     'DATETIME_FORMAT': "%d-%m-%Y %H:%M",
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 # JWT
