@@ -152,13 +152,13 @@ class ProductImageManager(CoreModelManager):
         product_image = self.create(product=product)
         product_pk = product.pk if product else 0
 
+        product_image.original.save(f'{product.pk}.jpg', image_file)
+
         catalog_image_name = f'catalog_{product_image.original.name}.jpg'
         product_image.catalog_image.save(catalog_image_name, catalog_image)
 
         thumb_image_name = f'thumb_{product_image.original.name}.jpg'
         product_image.thumb_image.save(thumb_image_name, thumb_image)
-
-        product_image.original.save(f'{product.pk}.jpg', image_file)
 
         return product_image
 
