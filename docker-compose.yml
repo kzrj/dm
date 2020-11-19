@@ -26,6 +26,7 @@ services:
     build: .
     depends_on:
       - db
+      - nginx
     # command: bash -c "cd dm &&
     #                   python manage.py migrate &&
     #                   python manage.py makemigrations --no-input &&
