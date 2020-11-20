@@ -63,4 +63,4 @@ class Profile(CoreModel):
         ordering = ['pk',]
 
     def __str__(self):
-        return 'Profile {}'.format(self.nickname)
+        return self.nickname

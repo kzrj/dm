@@ -10,7 +10,7 @@ from feedbacks.filters import FeedbackFilter
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):
-    queryset = Feedback.objects.all()
+    queryset = Feedback.objects.all().select_related('profile')
     serializer_class = FeedbackSerializer
     filter_class = FeedbackFilter
 
