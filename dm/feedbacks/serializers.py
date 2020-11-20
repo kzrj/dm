@@ -5,8 +5,8 @@ from feedbacks.models import Feedback
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
-    profile = serializers.StringRelatedField()
-    
+    nickname = serializers.StringRelatedField(source='profile')
+
     class Meta:
         model = Feedback
         fields = '__all__'
