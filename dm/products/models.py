@@ -85,7 +85,7 @@ class Shop(CoreModel):
 
     @property
     def all_products(self):
-        return self.products.get_all()
+        return self.products.get_all().filter(shop=self)
 
     @property
     def categories(self):
