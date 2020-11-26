@@ -52,7 +52,8 @@ class ShopQuerySet(models.QuerySet):
         return self.prefetch_related(
                         Prefetch(
                             'products',
-                            queryset=Product.objects.filter(category__name=category_name) \
+                            queryset=Product.objects.filter(category__name=category_name,
+                                                             active=True) \
                                                     .prefetch_related('images'),
                             to_attr='category_products'
                         )
