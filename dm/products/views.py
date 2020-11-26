@@ -56,7 +56,7 @@ class CategoryViewSet(CoreViewSet, viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.get_all()
     serializer_class = ProductSerializer
 
     def get_serializer_class(self):
