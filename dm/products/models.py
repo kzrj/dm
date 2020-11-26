@@ -84,7 +84,7 @@ class Shop(CoreModel):
         return images[:2]
 
     @property
-    def all_product(self):
+    def all_products(self):
         return self.products.get_all()
 
     @property

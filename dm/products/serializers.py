@@ -123,7 +123,7 @@ class ShopDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ShopDetailAllProductSerializer(serializers.ModelSerializer):
-    all_products = ProductSerializer(many=True, read_only=True)
+    all_products = ProductSerializer(many=True, read_only=True, source='all_products')
     categories = CategorySerializer(read_only=True, many=True)
     likes_list = serializers.ReadOnlyField()
     feedbacks_list = serializers.ReadOnlyField()
