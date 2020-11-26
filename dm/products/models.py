@@ -103,6 +103,10 @@ class ProductQuerySet(models.QuerySet):
 class ProductManager(CoreModelManager):
     def get_queryset(self):
         return ProductQuerySet(self.model, using=self._db) \
+            .select_related('category').prefetch_related('images').filter(active=True)
+
+    def get_all(self):
+        return ProductQuerySet(self.model, using=self._db) \
             .select_related('category').prefetch_related('images')
 
     def create_product(self, title, category, shop, price, description=None, image=None):
