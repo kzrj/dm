@@ -14,7 +14,7 @@ from django.core.mail import send_mail
 from django.db.utils import IntegrityError as DjangoIntegrityError
 
 from profiles.serializers import ProfileSerializer
-from products.serializers import ShopDetailSerializer
+from products.serializers import ShopDetailSerializer, ShopDetailAllProductSerializer
 
 
 class CustomValidation(exceptions.APIException):
@@ -59,7 +59,8 @@ def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
         'profile': ProfileSerializer(user.profile).data,
-        'shop': ShopDetailSerializer(user.profile.shop).data,
+        'shop': ShopDetailAllProductSerializer(user.profile.shop).data,
+        # 'shop': ShopDetailSerializer(user.profile.shop).data,
         # 'categories': ShopDetailSerializer(user.profile.shop).data,
     }
 
