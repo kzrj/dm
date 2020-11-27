@@ -30,10 +30,11 @@ class MainPageCategoryView(generic.TemplateView):
         cat_name = kwargs.get('cat_name')
         if cat_name:
             cat = Category.objects.filter(name=cat_name).first()
-            context['og_title'] = cat.ru_name
-            context['og_description'] = cat.description
-            image = cat.images.all().first()
-            if image:
-                context['og_image'] = image.catalog_image.url
+            if cat
+                context['og_title'] = cat.ru_name
+                context['og_description'] = cat.description
+                image = cat.images.all().first()
+                if image:
+                    context['og_image'] = image.catalog_image.url
 
         return context
