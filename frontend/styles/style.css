@@ -10,3 +10,8 @@ body{font-size:13px;font-family:"Roboto",sans-serif !important;line-height:26px 
 	max-width: 100%;
 	height: auto;
 }
+
+.react-simple-image-viewer__close{
+	top: 200px !important;
+	right: 60px !important;
+}
