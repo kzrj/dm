@@ -51,7 +51,9 @@ def gen_test_dm_products(shop_name, cats_list, images=True):
 def create_test_dm_products(images_onOff=True):
     User.objects.create_superuser(username='kaizerj', email='kzrster@gmail.com', password='jikozfree')
     user = User.objects.create_user(username='kzr', password='qwerty123')
+    user2 = User.objects.create_user(username='test_user1', password='svinbin123')
     Profile.objects.create(user=user, nickname='kzr')
+    Profile.objects.create(user=user2, nickname='test_user1')
 
     create_test_dm_categories()
     create_test_dm_shops()
