@@ -13,7 +13,7 @@ services:
       - .:/code
       - ./nginx:/etc/nginx/conf.d
       - ./frontend:/var/www/frontend
-      - ./media:/var/www/frontend/media
+      - ./media:/var/www/media
       # - ./media:/var/www/data/images
     depends_on:
       - backend
