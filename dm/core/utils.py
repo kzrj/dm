@@ -56,7 +56,7 @@ def custom_exception_handler(exc, context):
     return drf_exception_handler(exc, context)
 
 
-categories = list(Category.objects.all())
+# categories = list(Category.objects.all())
 
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
