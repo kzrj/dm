@@ -64,3 +64,15 @@ class Profile(CoreModel):
 
     def __str__(self):
         return self.nickname
+
+
+class SocialLink(CoreModel):
+    LINK_TYPES =  [('vk', 'vk'), ('inst', 'inst'), ('viber', 'viber'), ('web', 'web')]
+    link = models.URLField()
+    link_type = models.CharField(max_length=20, choices=LINK_TYPES)
+
+    shop = models.ForeignKey('products.Shop', on_delete=models.SET_NULL, null=True,
+         blank=True, related_name='socials')
+
+    def __str__(self):
+        return f'{self.pk} link'

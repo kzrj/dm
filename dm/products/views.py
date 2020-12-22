@@ -184,6 +184,10 @@ class ShopViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def partial_update(self, request, pk=None, *args, **kwargs):
+        
+        return self.partial_update(request, *args, **kwargs)
+
     def destroy(self, request, pk=None):
         pass
 

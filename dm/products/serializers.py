@@ -141,7 +141,14 @@ class CreateShopSerializer(serializers.Serializer):
     profile = serializers.PrimaryKeyRelatedField(queryset=Profile.objects.all())
 
 
+class SocialCreateSerializer(serializers.Serializer):
+    link_type = serializers.CharField()
+    link = serializers.CharField()
+
+
 class UpdateShopSerializer(serializers.ModelSerializer):
+    socials = SocialCreateSerializer(many=True, required=False)
+
     class Meta:
         model = Shop
-        fields = ['id', 'name', 'delivery', 'description', 'phone']
+        fields = ['id', 'name', 'delivery', 'description', 'phone', 'socials']

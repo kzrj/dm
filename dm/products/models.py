@@ -66,6 +66,12 @@ class Shop(CoreModel):
     description = models.TextField(null=True)
     delivery = models.CharField(max_length=100, null=True, blank=True)
 
+    # socials
+    # vk
+    # insta
+    # viber chat
+    # web
+
     objects = ShopQuerySet.as_manager()
 
     def __str__(self):
