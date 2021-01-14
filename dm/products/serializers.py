@@ -147,7 +147,7 @@ class SocialCreateSerializer(serializers.Serializer):
 
 
 class UpdateShopSerializer(serializers.ModelSerializer):
-    socials = SocialCreateSerializer(many=True, required=False)
+    socials = SocialCreateSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Shop
