@@ -2,7 +2,8 @@
 from django.test import TransactionTestCase
 from django.contrib.auth.models import User
 
-from profiles.models import Profile
+from profiles.models import Profile, SocialLink
+import products.testing_utils as product_testing
 
 
 class ProfileTest(TransactionTestCase):
@@ -20,7 +21,6 @@ class ProfileTest(TransactionTestCase):
         self.assertEqual(username, 'user_1')
         User.objects.create_user(username=username)
 
-
     def test_create_profile(self):
         profile = Profile.objects.create_profile(
             viber_id=123,
@@ -28,3 +28,14 @@ class ProfileTest(TransactionTestCase):
             )
 
         self.assertEqual(profile.user.username, 'user_1')
+
+
+class SocialLinkTest(TransactionTestCase):
+    def test_create_or_update_for_shop(self):
+        shop = product_testing.create_test_shop_test_user1()
+
+        socials_list = [
+            {'link_type': 'vk', 'link'}
+        ]
+
+        shop.socials.create_or_update_for_shop()

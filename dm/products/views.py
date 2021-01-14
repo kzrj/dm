@@ -39,7 +39,7 @@ from products.serializers import ProductSerializer, CategorySerializer, \
 from products.models import Product, Category, Shop
 from products.testing_utils import create_test_dm_products
 from products.filters import ShopFilter
-from profiles.models import Profile
+from profiles.models import Profile, SocialLink
 from profiles.serializers import ProfileSerializer
 
 from core.utils import create_token
@@ -185,11 +185,12 @@ class ShopViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, pk=None, *args, **kwargs):
-        print(args)
-        print(kwargs)
-        print(request.POST)
-        print(request.GET)
         print(request.data)
+        socials = request.data.get('socials')
+        if socials:
+            shop = self.get_object()
+            # SocialLink.objects.create_social
+
         return super(ShopViewSet, self).partial_update(request, *args, **kwargs)
 
     def destroy(self, request, pk=None):

@@ -66,6 +66,16 @@ class Profile(CoreModel):
         return self.nickname
 
 
+class SocialLinkManager(CoreModelManager):
+    def create_social(self, **kwargs):
+        return self.create(link_type=kwargs['link_type'], shop=kwargs['shop'], link=kwargs['link'])
+
+    def create_or_update_for_shop(self, socials, shop):
+        for s in socials:
+            soc, created = self.get_or_create(shop=shop, link_type=s['link_type'])
+            # if created:
+
+
 class SocialLink(CoreModel):
     LINK_TYPES =  [('vk', 'vk'), ('inst', 'inst'), ('viber', 'viber'), ('web', 'web')]
     link = models.URLField()
@@ -73,6 +83,8 @@ class SocialLink(CoreModel):
 
     shop = models.ForeignKey('products.Shop', on_delete=models.SET_NULL, null=True,
          blank=True, related_name='socials')
+
+    objects = SocialLinkManager()
 
     def __str__(self):
         return f'{self.pk} link'
