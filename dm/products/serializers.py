@@ -4,6 +4,8 @@ from rest_framework import serializers
 from products.models import Product, ProductImage, Category, Shop
 from profiles.models import Profile
 
+from profiles.serializers import SocialLinkReadSerializer
+
 
 class AnnotateFieldsModelSerializer(serializers.ModelSerializer):
     """
@@ -122,11 +124,13 @@ class ShopDetailSerializer(serializers.ModelSerializer):
         model = Shop
         fields = '__all__'
 
+
 class ShopDetailAllProductSerializer(serializers.ModelSerializer):
     all_products = ProductSerializer(many=True, read_only=True)
     categories = CategorySerializer(read_only=True, many=True)
     likes_list = serializers.ReadOnlyField()
     feedbacks_list = serializers.ReadOnlyField()
+    socials = SocialLinkReadSerializer(read_only=True, many=True)
 
     class Meta:
         model = Shop
