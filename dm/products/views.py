@@ -189,6 +189,7 @@ class ShopViewSet(viewsets.ModelViewSet):
         print(kwargs)
         print(request.POST)
         print(request.GET)
+        print(request.data)
         return super(ShopViewSet, self).partial_update(request, *args, **kwargs)
 
     def destroy(self, request, pk=None):
