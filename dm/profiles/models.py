@@ -70,10 +70,20 @@ class SocialLinkManager(CoreModelManager):
     def create_social(self, **kwargs):
         return self.create(link_type=kwargs['link_type'], shop=kwargs['shop'], link=kwargs['link'])
 
+    def delete_for_shop(self, socials, shop):
+        exist_socials = shop.socials.all().values_list('link_type', flat=True)
+        shop.socials.filter(link_type__in=
+            list(set(exist_socials) - set([s['link_type'] for s in socials]))).delete()
+
     def create_or_update_for_shop(self, socials, shop):
         for s in socials:
-            soc, created = self.get_or_create(shop=shop, link_type=s['link_type'])
-            # if created:
+            soc, created = shop.socials.get_or_create(link_type=s['link_type'])
+            soc.link=s['link']
+            soc.save()
+
+    def create_update_delete_for_shop(self, socials, shop):
+        self.delete_for_shop(socials=socials, shop=shop)
+        self.create_or_update_for_shop(socials, shop=shop)
 
 
 class SocialLink(CoreModel):
@@ -87,4 +97,7 @@ class SocialLink(CoreModel):
     objects = SocialLinkManager()
 
     def __str__(self):
-        return f'{self.pk} link'
+        return f'{self.pk} link {self.link_type} {self.link}'
+
+    class Meta:
+        unique_together = [['link_type', 'link']]

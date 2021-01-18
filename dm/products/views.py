@@ -185,11 +185,10 @@ class ShopViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, pk=None, *args, **kwargs):
-        print(request.data)
         socials = request.data.get('socials')
         if socials:
             shop = self.get_object()
-            # SocialLink.objects.create_social
+            shop.socials.create_update_delete_for_shop(shop=shop, socials=socials)
 
         return super(ShopViewSet, self).partial_update(request, *args, **kwargs)
 

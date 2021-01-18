@@ -32,7 +32,7 @@ services:
     # command: bash -c "cd dm &&
     #                   python manage.py migrate &&
     #                   python manage.py makemigrations --no-input &&
-    #                   python manage.py test core.tests.test_views.CoreViewSetTest.test_index_category"
+    #                   python manage.py test profiles.tests.test_models.SocialLinkCUDTest"
 
     restart: unless-stopped
     command: bash -c "cd dm && 
