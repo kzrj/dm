@@ -87,7 +87,7 @@ class SocialLinkManager(CoreModelManager):
 
 
 class SocialLink(CoreModel):
-    LINK_TYPES =  [('vk', 'vk'), ('inst', 'inst'), ('viber', 'viber'), ('web', 'web')]
+    LINK_TYPES =  [('vk', 'vk'), ('inst', 'inst'), ('web', 'web')]
     link = models.URLField()
     link_type = models.CharField(max_length=20, choices=LINK_TYPES)
 
