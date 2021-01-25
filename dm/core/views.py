@@ -20,12 +20,17 @@ class MainPageCategoryView(generic.TemplateView):
         shop_pk = kwargs.get('shop_pk')
         if shop_pk:
             shop = Shop.objects.get(pk=shop_pk)
-            # add category
+            shop_cat_name = kwargs.get('shop_cat_name')
+            
             context['og_title'] = shop.name
             context['og_description'] = shop.description
-            image = shop.products.all().first().images.all().first()
+
+            image = shop.products.filter(category__name=shop_cat_name).first().images.all().first()
             if image:
                 context['og_image'] = image.catalog_image.url
+            else:
+                cat = Category.objects.filter(name=cat_name).first()
+                context['og_image'] = cat.images.all().first().catalog_image.url
 
         cat_name = kwargs.get('cat_name')
         if cat_name:
