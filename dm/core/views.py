@@ -29,7 +29,7 @@ class MainPageCategoryView(generic.TemplateView):
             if image:
                 context['og_image'] = image.catalog_image.url
             else:
-                cat = Category.objects.filter(name=cat_name).first()
+                cat = Category.objects.filter(name=shop_cat_name).first()
                 context['og_image'] = cat.images.all().first().catalog_image.url
 
         cat_name = kwargs.get('cat_name')
