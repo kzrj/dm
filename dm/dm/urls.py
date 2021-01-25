@@ -32,7 +32,7 @@ urlpatterns = [
     path('viber/', viber_view, name='viber'),
 
     re_path('category/(?P<cat_name>[a-z]+)/', MainPageCategoryView.as_view(), name='main-category'),
-    re_path('shops/(?P<shop_pk>[0-9]+)/products/(?P<shop_cat_name>[a-z]+)', MainPageCategoryView.as_view(), name='main-category'),
+    re_path('shops/(?P<shop_pk>[0-9]+)/products/(?P<shop_cat_name>[a-z]+)/', MainPageCategoryView.as_view(), name='main-category'),
     # path('/shop detail/', viber_view, name='viber'),
 
     url(r'^$', IndexView.as_view(), name='main'),
