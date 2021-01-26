@@ -58,6 +58,6 @@ class SuggestionViewSet(viewsets.ModelViewSet):
                 profile=profile,
                 text=serializer.validated_data['text'],
                 )
-            return Response('Created', status=status.HTTP_200_OK)
+            return Response({'message': 'Спасибо!'}, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
