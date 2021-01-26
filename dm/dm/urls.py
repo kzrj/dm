@@ -13,7 +13,7 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 
 from products.views import ProductViewSet, CategoryViewSet, ShopViewSet, InitTestDataView, \
  	viber_view
-from feedbacks.views import FeedbackViewSet
+from feedbacks.views import FeedbackViewSet, SuggestionViewSet
 from core.views import IndexView, MainPageCategoryView
 
 router = routers.DefaultRouter()
@@ -21,6 +21,7 @@ router.register(r'products', ProductViewSet, basename='products')
 router.register(r'categories', CategoryViewSet, basename='categories')
 router.register(r'shops', ShopViewSet, basename='shops')
 router.register(r'feedbacks', FeedbackViewSet, basename='feedbacks')
+router.register(r'suggestions', SuggestionViewSet, basename='suggestions')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

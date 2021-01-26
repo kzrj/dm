@@ -8,8 +8,8 @@ from profiles.models import Profile
 
 
 def create_test_shop_test_user1():
-    user = User.objects.create_user(username='test_user1', password='qwerty123')
-    profile = Profile.objects.create(user=user, nickname='test_profile1')
+    user = User.objects.create_user(username='test_user3', password='qwerty123')
+    profile = Profile.objects.create(user=user, nickname='test_profile3')
     return Shop.objects.create_shop(name='test_shop', profile=profile, phone='123')
 
 def create_test_dm_categories():

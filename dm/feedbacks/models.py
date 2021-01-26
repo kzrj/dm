@@ -77,3 +77,15 @@ class Like(CoreModel):
 
     def __str__(self):
         return 'Like {}'.format(self.pk)
+
+
+class SuggestionManager(CoreModelManager):
+	pass
+
+
+class Suggestion(CoreModel):
+	profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True,
+		 related_name="suggetions")
+	text = models.TextField()
+
+	objects = SuggestionManager()
