@@ -54,6 +54,7 @@ class ProductImageIdSerializer(serializers.Serializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category = serializers.ReadOnlyField(source='category.name')
+    ru_category = serializers.ReadOnlyField(source='category.ru_name')
     images = ProductImageSerializer(many=True)
 
     class Meta:
@@ -77,10 +78,11 @@ class CreateProductSerializer(serializers.ModelSerializer):
 
 class UpdateProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(read_only=True, many=True)
+    ru_category = serializers.ReadOnlyField(source='category.ru_name')
 
     class Meta:
         model = Product
-        fields = ['title', 'price', 'description', 'category', 'id', 'active', 'images']
+        fields = ['title', 'price', 'description', 'category', 'ru_category', 'id', 'active', 'images']
 
 
 class ActivateDeactivateProductSerializer(serializers.Serializer):
