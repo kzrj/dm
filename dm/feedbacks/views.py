@@ -45,7 +45,7 @@ class FeedbackViewSet(viewsets.ModelViewSet):
 class SuggestionViewSet(viewsets.ModelViewSet):
     queryset = Suggestion.objects.all()
     serializer_class = SuggestionSerializer
-    permission_classes = [SuggestionPermission, ]
+    # permission_classes = [SuggestionPermission, ]
 
     def create(self, request):
         serializer = SuggestionSerializer(data=request.data)
