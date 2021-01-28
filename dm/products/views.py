@@ -72,7 +72,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             product = Product.objects.create_product(
                 title=serializer.validated_data['title'],
                 price=serializer.validated_data['price'],
-                description=serializer.validated_data['description'],
+                description=serializer.validated_data.get('description'),
                 category=serializer.validated_data['category'],
                 shop=request.user.profile.shop
             )
