@@ -17,7 +17,6 @@ class ShopTest(TransactionTestCase):
     def test_create_test_dm_products(self):
         self.assertEqual(Product.objects.all().count() > 0, True)
 
-
     def test_add_products_count_by_dm_cat(self):
         shop = Shop.objects.all().add_products_count_by_dm_cat().first()
 
@@ -81,7 +80,7 @@ class ShopTest(TransactionTestCase):
     #     self.assertEqual(image.catalog_image.name, f'catalog_{product.pk}.jpg')
 
     def test_create_shop(self):
-        profile = Profile.objects.get(username='kzr')
+        profile = Profile.objects.get(user__username='kzr')
         shop = Shop.objects.create_shop(name='test shop', phone='123', profile=profile,
             delivery='delivery', description='description')
         self.assertEqual(shop.name, 'test shop')
@@ -90,6 +89,33 @@ class ShopTest(TransactionTestCase):
 
         profile.refresh_from_db()
         self.assertEqual(profile.shop, shop)
+
+    def test_add_last_modified_date_product(self):
+        category1 = Category.objects.get(name='myaso')
+        category2 = Category.objects.get(name='napitki')
+
+        profile1 = Profile.objects.get(user__username='kzr')
+        shop1 = Shop.objects.create_shop(name='test shop', phone='123', profile=profile1,
+            delivery='delivery', description='description')
+
+        profile2 = Profile.objects.get(user__username='test_user1')
+        shop2 = Shop.objects.create_shop(name='test shop 2', phone='123', profile=profile2,
+            delivery='delivery', description='description')
+
+        product11 = Product.objects.create_product(title='test product1 shop1', category=category1,
+             price='1', shop=shop1)
+        product12 = Product.objects.create_product(title='test product2 shop1', category=category2,
+             price='1', shop=shop1)
+        product21 = Product.objects.create_product(title='test product1 shop2', category=category1,
+             price='1', shop=shop2)
+        product22 = Product.objects.create_product(title='test product2 shop2', category=category2,
+             price='1', shop=shop2)
+
+        self.assertEqual(Shop.objects.all().add_last_modified_date_product() \
+                .order_by('-last_modified_date_product').first(), shop2)
+
+        # for shop in Shop.objects.all().add_last_modified_date_product().order_by('-last_modified_date_product'):
+        #     print(shop, shop.modified_at, shop.last_modified_date_product)
 
 
 class ImageCreationTest(TransactionTestCase):

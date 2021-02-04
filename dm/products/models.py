@@ -59,6 +59,13 @@ class ShopQuerySet(models.QuerySet):
                         )
                     )
 
+    def add_last_modified_date_product(self, category_name):
+        product_last_activity_subquery = Subquery(
+            Product.objects.filter(shop__pk=OuterRef('pk'), active=True, category__name=category_name) \
+                .order_by('-modified_at') \
+                .values('modified_at')[:1], output_field=models.DateTimeField())
+        return self.annotate(last_modified_date_product=product_last_activity_subquery)
+
 
 class Shop(CoreModel):
     name = models.CharField(max_length=100)
