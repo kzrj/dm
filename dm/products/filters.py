@@ -7,6 +7,7 @@ from products.models import Shop
 
 class ShopFilter(filters.FilterSet):
     category = filters.CharFilter(method='filter_by_category')
+    category_last_active = filters.CharFilter(method='filter_by_activity_in_category')
 
     def filter_by_category(self, queryset, name, value):
         return queryset.filter_by_cat(value)
