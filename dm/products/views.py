@@ -237,7 +237,7 @@ def login_keyboard(viber_id=None):
             "Buttons": [
                {
                     "Columns": 1,
-                    "Rows": 2,
+                    "Rows": 6,
                     "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
                     "TextSize": "regular",
                     "TextHAlign": "center",
@@ -248,30 +248,30 @@ def login_keyboard(viber_id=None):
                     "BgColor": "#f7bb3f",
                     "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
                 },
-                {
-                    "Columns": 1,
-                    "Rows": 2,
-                    "BgColor": "#e6f5ff",
-                    "BgMedia": "http://link.to.button.image",
-                    "BgMediaType": "picture",
-                    "BgLoop": True,
-                    "ActionType": "reply",
-                    "ActionBody": "MASS_MESSAGES",
-                    "ReplyType": "message",
-                    "Text": "Много месаг"
-                },
-                {
-                    "Columns": 1,
-                    "Rows": 2,
-                    "BgColor": "#e6f5ff",
-                    "BgMedia": "http://link.to.button.image",
-                    "BgMediaType": "picture",
-                    "BgLoop": True,
-                    "ActionType": "reply",
-                    "ActionBody": "MASS_MESSAGES2",
-                    "ReplyType": "message",
-                    "Text": "XZ"
-                },
+                # {
+                #     "Columns": 1,
+                #     "Rows": 2,
+                #     "BgColor": "#e6f5ff",
+                #     "BgMedia": "http://link.to.button.image",
+                #     "BgMediaType": "picture",
+                #     "BgLoop": True,
+                #     "ActionType": "reply",
+                #     "ActionBody": "MASS_MESSAGES",
+                #     "ReplyType": "message",
+                #     "Text": "Много месаг"
+                # },
+                # {
+                #     "Columns": 1,
+                #     "Rows": 2,
+                #     "BgColor": "#e6f5ff",
+                #     "BgMedia": "http://link.to.button.image",
+                #     "BgMediaType": "picture",
+                #     "BgLoop": True,
+                #     "ActionType": "reply",
+                #     "ActionBody": "MASS_MESSAGES2",
+                #     "ReplyType": "message",
+                #     "Text": "XZ"
+                # },
             ],
             "InputFieldState": 'regular'
         }
