@@ -297,32 +297,32 @@ def viber_view(request):
     else:
         viber_user = viber_request.sender
 
-    customer = Profile.objects.get_or_create_profile_viber(
-            viber_id=viber_user.id,
-            viber_name=viber_user.name,
-            viber_avatar=viber_user.avatar,
-            )
+        customer = Profile.objects.get_or_create_profile_viber(
+                viber_id=viber_user.id,
+                viber_name=viber_user.name,
+                viber_avatar=viber_user.avatar,
+                )
 
-    if isinstance(viber_request, ViberUnsubscribedRequest):
-        return HttpResponse('ok', status=200)
+        if isinstance(viber_request, ViberUnsubscribedRequest):
+            return HttpResponse('ok', status=200)
 
-    if viber_request.message.text == 'MASS_MESSAGES':
-        for i in range(0, 10):
+        if viber_request.message.text == 'MASS_MESSAGES':
+            for i in range(0, 10):
+                viber.send_messages(viber_request.sender.id, [
+                    text_message
+                ])
+        elif viber_request.message.text == 'MASS_MESSAGES2':
+            viber.send_messages(viber_request.sender.id, msgs)
+        else:
+            # text_message = TextMessage(text="Оппа!")
+            # viber.send_messages(viber_request.sender.id, msgs)
+            url_message = URLMessage(media="https://svoyaeda.su/api/");
+            token = create_token(customer.user)
             viber.send_messages(viber_request.sender.id, [
-                text_message
+                text_message, url_message,
+                KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
+                                keyboard=login_keyboard(token),
+                                min_api_version=6)
             ])
-    elif viber_request.message.text == 'MASS_MESSAGES2':
-        viber.send_messages(viber_request.sender.id, msgs)
-    else:
-        # text_message = TextMessage(text="Оппа!")
-        # viber.send_messages(viber_request.sender.id, msgs)
-        url_message = URLMessage(media="https://svoyaeda.su/api/");
-        token = create_token(customer.user)
-        viber.send_messages(viber_request.sender.id, [
-            text_message, url_message,
-            KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
-                            keyboard=login_keyboard(token),
-                            min_api_version=6)
-        ])
 
     return HttpResponse('ok', status=200)
