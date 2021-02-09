@@ -70,14 +70,8 @@ class ShopQuerySet(models.QuerySet):
 class Shop(CoreModel):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     delivery = models.TextField(null=True, blank=True)
-
-    # socials
-    # vk
-    # insta
-    # viber chat
-    # web
 
     objects = ShopQuerySet.as_manager()
 
