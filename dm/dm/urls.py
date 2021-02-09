@@ -36,7 +36,7 @@ urlpatterns = [
     re_path('shops/(?P<shop_pk>[0-9]+)/products/(?P<shop_cat_name>[a-z]+)/', MainPageCategoryView.as_view(), name='main-category'),
     # path('/shop detail/', viber_view, name='viber'),
 
-    url(r'^$', IndexView.as_view(), name='main'),
+    url(r'^$', MainPageCategoryView.as_view(), name='main'),
     # url(r'^(?:.*)/?$', IndexView.as_view()),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
