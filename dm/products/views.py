@@ -237,7 +237,7 @@ def login_keyboard(viber_id=None):
             "Buttons": [
                {
                     "Columns": 1,
-                    "Rows": 6,
+                    "Rows": 4,
                     "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
                     "TextSize": "regular",
                     "TextHAlign": "center",
