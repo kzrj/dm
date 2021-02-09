@@ -287,7 +287,7 @@ def viber_view(request):
     if isinstance(viber_request, ViberConversationStartedRequest):
         viber_user = viber_request.user
 
-        text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!", trackingData='FIRST_LOGIN')
+        text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
         viber.send_messages(viber_request.user.id, [
             text_message, 
             # KeyboardMessage(tracking_data='TRACKING_CREATE_AD_PHONE', 
