@@ -229,8 +229,6 @@ viber = Api(BotConfiguration(
 
 
 def login_keyboard(viber_id=None):
-    # get or create user with profile.viber_id = viber_id
-    # gen token
     token = 'token'
     return {
             "Type": "keyboard",
@@ -238,7 +236,7 @@ def login_keyboard(viber_id=None):
                {
                     "Columns": 1,
                     "Rows": 2,
-                    "Text": "<br><font color=#494E67><b>Открыть сайт</b></font>",
+                    "Text": "<br><font color=#494E67><b>Смотреть объявления</b></font>",
                     "TextSize": "regular",
                     "TextHAlign": "center",
                     "TextVAlign": "middle",
@@ -281,9 +279,6 @@ def login_keyboard(viber_id=None):
 def viber_view(request):
     viber_request = viber.parse_request(request.body)
 
-    text_message = TextMessage(text="Оппа!")
-    msgs = [text_message for i in range(0, 10)]
-
     if isinstance(viber_request, ViberUnsubscribedRequest):
         return HttpResponse('ok', status=200)
 
@@ -301,7 +296,8 @@ def viber_view(request):
                 viber_avatar=viber_user.avatar,
                 )
 
-        url_message = URLMessage(media="https://svoyaeda.su/");
+        url_message = URLMessage(media="https://svoyaeda.su/")
+        text_message = TextMessage(text="Нажмите кнопку 'Смотреть объявления'!")
         token = create_token(customer.user)
         viber.send_messages(viber_request.sender.id, [
             text_message, 
