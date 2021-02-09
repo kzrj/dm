@@ -177,7 +177,7 @@ class ShopViewSet(viewsets.ModelViewSet):
             return Response(
                 {
                     "message": "Created",
-                    "shop": ShopDetailSerializer(shop).data,
+                    "shop": ShopDetailAllProductSerializer(shop).data,
                     "profile": ProfileSerializer(profile).data
                 },
                 status=status.HTTP_200_OK)
