@@ -1533,15 +1533,15 @@ $(document).ready(function(){
     }
     
     //Activate the PWA    
-    if(isPWA === true){
-        var loadJS = function(url, implementationCode, location){
-            var scriptTag = document.createElement('script');
-            scriptTag.src = url;
-            scriptTag.onload = implementationCode;
-            scriptTag.onreadystatechange = implementationCode;
-            location.appendChild(scriptTag);
-        };
-        function loadPWA(){}
-        loadJS('scripts/pwa.js', loadPWA, document.body);
-    }    
+    // if(isPWA === true){
+    //     var loadJS = function(url, implementationCode, location){
+    //         var scriptTag = document.createElement('script');
+    //         scriptTag.src = url;
+    //         scriptTag.onload = implementationCode;
+    //         scriptTag.onreadystatechange = implementationCode;
+    //         location.appendChild(scriptTag);
+    //     };
+    //     function loadPWA(){}
+    //     loadJS('scripts/pwa.js', loadPWA, document.body);
+    // }    
 }); 
