@@ -8,8 +8,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  
-  {% block metatags %}{% endblock metatags %}
 
   <!-- <title>Домашняя продкция</title> -->
 
@@ -26,7 +24,15 @@
 <body class="theme-light" data-background="none" data-highlight="blue2">
   <div id="root"></div>
 </body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0Z91C0YP7N"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-0Z91C0YP7N');
+</script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script type="text/javascript" src="/scripts/jquery.js"></script>
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
