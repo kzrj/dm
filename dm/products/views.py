@@ -234,7 +234,7 @@ def login_keyboard(viber_id=None):
             "Type": "keyboard",
             "Buttons": [
                {
-                    "Columns": 1,
+                    "Columns": 6,
                     "Rows": 2,
                     "Text": "<br><font color=#494E67><b>Смотреть объявления</b></font>",
                     "TextSize": "regular",
