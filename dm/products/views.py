@@ -288,6 +288,7 @@ def viber_view(request):
         text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
         viber.send_messages(viber_request.user.id, [ text_message ])
     else:
+    	print(viber_request)
         viber_user = viber_request.sender
 
         customer = Profile.objects.get_or_create_profile_viber(
@@ -296,13 +297,12 @@ def viber_view(request):
                 viber_avatar=viber_user.avatar,
                 )
 
-        url_message = URLMessage(media="https://svoyaeda.su/")
         text_message = TextMessage(text="Нажмите кнопку 'Смотреть объявления'!")
         token = create_token(customer.user)
         viber.send_messages(viber_request.sender.id, [
             text_message, 
-            # url_message,
             KeyboardMessage(keyboard=login_keyboard(token),
+            				tracking_data='TRACKING_SHOW_WEBSITE', 
                             min_api_version=6)
         ])
 
