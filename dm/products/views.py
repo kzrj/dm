@@ -290,8 +290,8 @@ def viber_view(request):
     else:
         print(viber_request)
         if hasattr(viber_request, 'message'):
-            print(viber_name.message)
-            print(viber_name.message.tracking_data)
+            print(viber_request.message)
+            print(viber_request.message.tracking_data)
             print('______________________________________________dd________________')
         viber_user = viber_request.sender
 
