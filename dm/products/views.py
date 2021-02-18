@@ -288,7 +288,7 @@ def viber_view(request):
         text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
         viber.send_messages(viber_request.user.id, [ text_message ])
     else:
-    	print(viber_request)
+        print(viber_request)
         viber_user = viber_request.sender
 
         customer = Profile.objects.get_or_create_profile_viber(
@@ -302,7 +302,7 @@ def viber_view(request):
         viber.send_messages(viber_request.sender.id, [
             text_message, 
             KeyboardMessage(keyboard=login_keyboard(token),
-            				tracking_data='TRACKING_SHOW_WEBSITE', 
+                            tracking_data='TRACKING_SHOW_WEBSITE', 
                             min_api_version=6)
         ])
 
