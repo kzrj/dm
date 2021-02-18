@@ -289,6 +289,10 @@ def viber_view(request):
         viber.send_messages(viber_request.user.id, [ text_message ])
     else:
         print(viber_request)
+        if hasattr(viber_request, 'message'):
+            print(viber_name.message)
+            print(viber_name.message.tracking_data)
+            print('______________________________________________dd________________')
         viber_user = viber_request.sender
 
         customer = Profile.objects.get_or_create_profile_viber(
