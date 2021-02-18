@@ -288,11 +288,6 @@ def viber_view(request):
         text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
         viber.send_messages(viber_request.user.id, [ text_message ])
     else:
-        print(viber_request)
-        if hasattr(viber_request, 'message'):
-            print(viber_request.message)
-            print(viber_request.message.tracking_data)
-            print('______________________________________________dd________________')
         viber_user = viber_request.sender
 
         customer = Profile.objects.get_or_create_profile_viber(
@@ -300,6 +295,10 @@ def viber_view(request):
                 viber_name=viber_user.name,
                 viber_avatar=viber_user.avatar,
                 )
+        
+        if hasattr(viber_request, 'message'):
+            if viber_request.message.tracking_data == 'TRACKING_SHOW_WEBSITE':
+                return HttpResponse('ok', status=200)
 
         text_message = TextMessage(text="Нажмите кнопку 'Смотреть объявления'!")
         token = create_token(customer.user)
