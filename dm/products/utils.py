@@ -31,7 +31,7 @@ def image_from_file(file):
 
 def create_resized_image_from_file(file, width=None, height=None):
     tmpfile = tempfile.TemporaryFile()
-    if width > 0:
+    if width and width > 0:
         resize(file, width, height).save(tmpfile, format='JPEG')
     else:
         image_from_file(file).save(tmpfile, format='JPEG', optimize=True, quality=95)
