@@ -29,10 +29,10 @@ def image_from_file(file):
     return image
 
 
-def create_resized_image_from_file(file, resolution):
+def create_resized_image_from_file(file, width=None, height=None):
     tmpfile = tempfile.TemporaryFile()
     if resolution > 0:
-        resize(file, resolution, None).save(tmpfile, format='JPEG')
+        resize(file, width, height).save(tmpfile, format='JPEG')
     else:
         image_from_file(file).save(tmpfile, format='JPEG')
     tmpfile.seek(0)
