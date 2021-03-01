@@ -161,7 +161,7 @@ class ProductImageManager(CoreModelManager):
         return ProductImageQuerySet(self.model, using=self._db)
 
     def create_product_image(self, image_file, product=None):
-        catalog_image = create_resized_image_from_file(image_file, width=1024, height=768)
+        catalog_image = create_resized_image_from_file(image_file)
 
         thumb_image = create_resized_image_from_file(image_file, width=80, height=60)
 
