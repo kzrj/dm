@@ -243,33 +243,9 @@ def login_keyboard(viber_id=None):
                     "ActionType": "open-url",
                     "ActionBody": f"https://svoyaeda.su/dm/login/v/{viber_id}",
                     "OpenURLType": "external",
-                    "BgColor": "#f7bb3f",
+                    "BgColor": "#20c997",
                     "Image": "https://s18.postimg.org/9tncn0r85/sushi.png"
                 },
-                # {
-                #     "Columns": 1,
-                #     "Rows": 2,
-                #     "BgColor": "#e6f5ff",
-                #     "BgMedia": "http://link.to.button.image",
-                #     "BgMediaType": "picture",
-                #     "BgLoop": True,
-                #     "ActionType": "reply",
-                #     "ActionBody": "MASS_MESSAGES",
-                #     "ReplyType": "message",
-                #     "Text": "Много месаг"
-                # },
-                # {
-                #     "Columns": 1,
-                #     "Rows": 2,
-                #     "BgColor": "#e6f5ff",
-                #     "BgMedia": "http://link.to.button.image",
-                #     "BgMediaType": "picture",
-                #     "BgLoop": True,
-                #     "ActionType": "reply",
-                #     "ActionBody": "MASS_MESSAGES2",
-                #     "ReplyType": "message",
-                #     "Text": "XZ"
-                # },
             ],
             "InputFieldState": 'regular'
         }
@@ -295,7 +271,7 @@ def viber_view(request):
                 viber_name=viber_user.name,
                 viber_avatar=viber_user.avatar,
                 )
-        
+
         if hasattr(viber_request, 'message'):
             if viber_request.message.tracking_data == 'TRACKING_SHOW_WEBSITE':
                 return HttpResponse('ok', status=200)
