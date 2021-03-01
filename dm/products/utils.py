@@ -7,10 +7,7 @@ from django.conf import settings
 from PIL import Image, ImageDraw, ImageFont
 
 
-def resize(file, width=None, height=None):
-    image = Image.open(file)
-    imageWidth, imageHeight = image.size
-
+def resize(image, width=None, height=None):
     if width is None and height is not None:
         imageWidth = (imageWidth * height) / imageHeight
         imageHeight = height
@@ -23,19 +20,17 @@ def resize(file, width=None, height=None):
 
     return image.resize((int(imageWidth), int(imageHeight)), Image.ANTIALIAS)
 
-
-def image_from_file(file):
-    image = Image.open(file)
-    return image
-
-
 def create_resized_image_from_file(file, width=None, height=None):
     tmpfile = tempfile.TemporaryFile()
+    image = Image.open(file)
+    imageWidth, imageHeight = image.size
+
     if width and width > 0:
-        resize(file, width, height).save(tmpfile, format='JPEG')
+        resize(image, width, height).save(tmpfile, format='JPEG')
     else:
-        image_from_file(file).save(tmpfile, format='JPEG', optimize=True, quality=95)
+        image = image_from_file(file)
+        image.save(tmpfile, format='JPEG', optimize=True, quality=95)
     tmpfile.seek(0)
 
-    return tmpfile
+    return tmpfile, imageWidth, imageHeight
     

@@ -161,9 +161,10 @@ class ProductImageManager(CoreModelManager):
         return ProductImageQuerySet(self.model, using=self._db)
 
     def create_product_image(self, image_file, product=None):
-        catalog_image = create_resized_image_from_file(image_file)
+        catalog_image, cat_width, cat_height = create_resized_image_from_file(image_file)
 
-        thumb_image = create_resized_image_from_file(image_file, width=80, height=60)
+        thumb_image, thumb_width, thumb_height = \
+            create_resized_image_from_file(image_file, width=80, height=60)
 
         product_image = self.create(product=product)
         product_pk = product.pk if product else 0
@@ -172,6 +173,9 @@ class ProductImageManager(CoreModelManager):
 
         catalog_image_name = f'catalog_{product_image.original.name}.jpg'
         product_image.catalog_image.save(catalog_image_name, catalog_image)
+        product_image.cat_width = cat_width
+        product_image.cat_height = cat_height
+        product_image.save()
 
         thumb_image_name = f'thumb_{product_image.original.name}.jpg'
         product_image.thumb_image.save(thumb_image_name, thumb_image)
@@ -188,6 +192,9 @@ class ProductImage(CoreModel):
          null=True, blank=True)
     original = models.FileField(null=True, blank=True)
     catalog_image = models.FileField(null=True, blank=True)
+    cat_width = models.IntegerField(null=True, blank=True)
+    cat_height = models.IntegerField(null=True, blank=True)
+
     thumb_image = models.FileField(null=True, blank=True)
 
     objects = ProductImageManager()
