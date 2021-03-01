@@ -28,7 +28,7 @@ def create_resized_image_from_file(file, width=None, height=None):
     if width and width > 0:
         resize(image, width, height).save(tmpfile, format='JPEG')
     else:
-        image.save(tmpfile, format='JPEG', optimize=True, quality=50)
+        image.save(tmpfile, format='JPEG', optimize=True, quality=35)
     tmpfile.seek(0)
 
     return tmpfile, imageWidth, imageHeight
