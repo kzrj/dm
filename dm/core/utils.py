@@ -15,7 +15,7 @@ from django.db.utils import IntegrityError as DjangoIntegrityError
 
 from products.models import Category
 from profiles.serializers import ProfileSerializer
-from products.serializers import ShopDetailSerializer, ShopDetailAllProductSerializer, CategorySerializer
+from products.serializers import ShopDetailAllProductSerializer, CategorySerializer
 
 
 class CustomValidation(exceptions.APIException):

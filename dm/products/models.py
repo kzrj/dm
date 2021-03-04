@@ -66,6 +66,14 @@ class ShopQuerySet(models.QuerySet):
                 .values('modified_at')[:1], output_field=models.DateTimeField())
         return self.annotate(last_modified_date_product=product_last_activity_subquery)
 
+    def add_category_products_images_quantity(self, category_name):
+        subquery = ProductImage.objects.filter(product__shop__pk=OuterRef('pk'), product__active=True,
+            product__category__name=category_name) \
+            .values('product__category') \
+            .annotate(cnt=Count('pk')) \
+            .values('cnt')
+        return self.annotate(cat_images_cnt=Subquery(subquery))
+
 
 class Shop(CoreModel):
     name = models.CharField(max_length=100)
@@ -76,19 +84,7 @@ class Shop(CoreModel):
     objects = ShopQuerySet.as_manager()
 
     def __str__(self):
-        return self.name
-
-    @property
-    def category_images(self):
-        images = []
-        if not hasattr(self, 'category_products'):
-            return images
-        
-        for product in self.category_products:
-            if product.images.all().first():
-                images.append(product.images.all().first().catalog_image.url)
-
-        return images[:2]
+        return self.name      
 
     @property
     def all_products(self):

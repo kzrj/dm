@@ -8,13 +8,7 @@ from profiles.serializers import SocialLinkReadSerializer
 
 
 class AnnotateFieldsModelSerializer(serializers.ModelSerializer):
-    """
-    A ModelSerializer that takes an additional `fields` argument that
-    controls which fields should be displayed.
-    """
-
     def __init__(self, *args, **kwargs):
-        # Instantiate the superclass normally
         super(AnnotateFieldsModelSerializer, self).__init__(*args, **kwargs)
 
         if len(args) > 0 and len(args[0]) > 0:
@@ -22,7 +16,6 @@ class AnnotateFieldsModelSerializer(serializers.ModelSerializer):
                 if field_name[0] == '_' or field_name in self.fields.keys():
                     continue
                 self.fields[field_name] = serializers.ReadOnlyField()
-
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -99,28 +92,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ShopSerializer(serializers.ModelSerializer):
     likes_list = serializers.ReadOnlyField()
-
-    class Meta:
-        model = Shop
-        fields = '__all__'
-
-
-class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
-    category_products = ProductMiniSerializer(many=True)
-    category_images = serializers.ReadOnlyField(required=False, default=None)
-    likes_list = serializers.ReadOnlyField()
-    feedbacks_list = serializers.ReadOnlyField()
-
-    class Meta:
-        model = Shop
-        exclude = ['created_at', 'modified_at', 'description', 'delivery']
-
-
-class ShopDetailSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True)
-    categories = CategorySerializer(read_only=True, many=True)
-    likes_list = serializers.ReadOnlyField()
-    feedbacks_list = serializers.ReadOnlyField()
 
     class Meta:
         model = Shop
