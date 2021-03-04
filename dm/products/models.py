@@ -146,7 +146,7 @@ class Product(CoreModel):
     objects = ProductManager()
 
     class Meta:
-        ordering = ['pk',]
+        ordering = ['-modified_at',]
 
     def __str__(self):
         return f'{self.title} - {self.price}'
