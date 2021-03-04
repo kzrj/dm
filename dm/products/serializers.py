@@ -98,6 +98,28 @@ class ShopSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ShopWithProductsSerializer(AnnotateFieldsModelSerializer, serializers.ModelSerializer):
+    category_products = ProductMiniSerializer(many=True)
+    category_images = serializers.ReadOnlyField(required=False, default=None)
+    likes_list = serializers.ReadOnlyField()
+    feedbacks_list = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Shop
+        exclude = ['created_at', 'modified_at', 'description', 'delivery']
+
+
+class ShopDetailSerializer(serializers.ModelSerializer):
+    products = ProductSerializer(many=True)
+    categories = CategorySerializer(read_only=True, many=True)
+    likes_list = serializers.ReadOnlyField()
+    feedbacks_list = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Shop
+        fields = '__all__'
+
+
 class ShopDetailAllProductSerializer(serializers.ModelSerializer):
     all_products = ProductSerializer(many=True, read_only=True)
     categories = CategorySerializer(read_only=True, many=True)
