@@ -114,6 +114,7 @@ class ShopDetailSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(read_only=True, many=True)
     likes_list = serializers.ReadOnlyField()
     feedbacks_list = serializers.ReadOnlyField()
+    socials = SocialLinkReadSerializer(read_only=True, many=True)
 
     class Meta:
         model = Shop
