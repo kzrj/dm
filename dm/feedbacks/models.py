@@ -28,7 +28,7 @@ class Feedback(CoreModel):
     objects = FeedbackManager()
 
     class Meta:
-        ordering = ['pk',]
+        ordering = ['-modified_at',]
         constraints = [
             models.UniqueConstraint(fields=['profile', 'shop'],
                 name='unique_feedback_to_shop'),
