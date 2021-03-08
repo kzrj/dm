@@ -37,6 +37,7 @@ class MainPageCategoryView(generic.TemplateView):
         if cat_name:
             cat = Category.objects.filter(name=cat_name).first()
             if cat:
+                context['title'] = cat.ru_name
                 context['og_title'] = cat.ru_name
                 context['og_description'] = cat.description
                 image = cat.images.all().first()
