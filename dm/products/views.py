@@ -262,7 +262,7 @@ def viber_view(request):
     if isinstance(viber_request, ViberConversationStartedRequest):
         viber_user = viber_request.user
 
-        text_message = TextMessage(text="Конверсэйшн! Приветствие! Логин!")
+        text_message = TextMessage(text="Привет! Отправьте сообщение и сможете войти.")
         viber.send_messages(viber_request.user.id, [ text_message ])
     else:
         viber_user = viber_request.sender
