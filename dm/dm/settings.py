@@ -26,7 +26,8 @@ SECRET_KEY = 'f1es$+gijkue9=x)rr7(bb3&tp@5uv8$8uuqwpo)m$-j%c$eyl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['svoyaeda.su', '.localhost', '127.0.0.1',]
+# ALLOWED_HOSTS = ['svoyaeda.su', '.localhost', '127.0.0.1', ]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
