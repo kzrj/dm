@@ -14,7 +14,7 @@ class MainPageCategoryView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['og_title'] = 'Еда из Улан-Удэ'
-        context['og_description'] = 'Описание дм'
+        context['og_description'] = 'Еда из Улан-Удэ'
         context['og_image'] = None
 
         shop_pk = kwargs.get('shop_pk')
