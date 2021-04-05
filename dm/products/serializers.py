@@ -84,6 +84,7 @@ class ActivateDeactivateProductSerializer(serializers.Serializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
+    count_shops = serializers.ReadOnlyField()
 
     class Meta:
         model = Category

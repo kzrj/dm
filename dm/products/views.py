@@ -51,7 +51,7 @@ class CoreViewSet(viewsets.ViewSet):
 
 
 class CategoryViewSet(CoreViewSet, viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().add_shop_count()
     serializer_class = CategorySerializer
 
 

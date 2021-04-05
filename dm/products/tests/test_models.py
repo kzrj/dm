@@ -7,7 +7,7 @@ from feedbacks.models import Feedback, Like
 
 import products.testing_utils as product_testing
 from products.utils import create_resized_image_from_file
-from products.serializers import ShopDetailSerializer, ShopWithProductsSerializer
+from products.serializers import ShopDetailSerializer, ShopWithProductsSerializer, CategorySerializer
 
 
 class ShopTest(TransactionTestCase):
@@ -142,3 +142,16 @@ class SerializersTest(TransactionTestCase):
 
     #     with self.assertNumQueries(4):
     #         bool(ShopWithProductsSerializer(self.shop).data)
+
+
+class CategoryTest(TransactionTestCase):
+    def setUp(self):
+        product_testing.create_test_dm_products(images_onOff=False)
+
+    def test_add_shop_count(self):
+        cats = Category.objects.all().add_shop_count()
+        for c in cats:
+            self.assertTrue(c.count_shops > 0)
+
+        cats_data = CategorySerializer(cats, many=True).data
+        self.assertEqual(cats_data[0]['count_shops'], 5)

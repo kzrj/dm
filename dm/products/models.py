@@ -10,12 +10,21 @@ from core.models import CoreModel, CoreModelManager
 from products.utils import create_resized_image_from_file
 
 
+class CategoryQuerySet(models.QuerySet):
+    def add_shop_count(self):
+        return self.annotate(
+            count_shops=Count('products__shop', distinct=True)
+            )
+
+
 class Category(CoreModel):
     CAT_TYPES =  [('dm', 'dm'), ('ds', 'ds')]
     name = models.CharField(max_length=100)
     ru_name = models.CharField(max_length=100, null=True)
     description = models.TextField(null=True)
     category_type = models.CharField(max_length=20, choices=CAT_TYPES)
+
+    objects = CategoryQuerySet.as_manager()
 
     class Meta:
         ordering = ['name',]
